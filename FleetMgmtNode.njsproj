@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>FleetMgmtNode</Name>
+    <RootNamespace>ExpressApp1</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>9d542cde-0b4a-4766-9035-0140b3bd15b3</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>app.js</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <NodejsPort>1337</NodejsPort>
+    <StartWebBrowser>true</StartWebBrowser>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="app.js" />
+    <Content Include="app\routes\api\concRouter.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\routes\api\notesRoutes.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="app\routes\router.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="database.js">
+      <SubType>Code</SubType>
+    </Content>
+    <None Include="public\scripts\jquery-3.4.1.intellisense.js" />
+    <None Include="FolderProfile.pubxml" />
+    <Content Include="public\BARs.csv" />
+    <Content Include="public\BARsWalmart.csv" />
+    <Content Include="public\default.html" />
+    <Content Include="public\favicon.ico" />
+    <Content Include="public\images\jira.svg" />
+    <Content Include="public\images\PortConfig_1Port.svg" />
+    <Content Include="public\images\PortConfig_2Ports.svg" />
+    <Content Include="public\images\PortConfig_3Ports.svg" />
+    <Content Include="public\images\PortConfig_4Ports.svg" />
+    <Content Include="public\images\PortConfig_5Ports.svg" />
+    <Content Include="public\images\quickbase.svg" />
+    <Content Include="public\images\walmart.png" />
+    <Content Include="public\notepad.html">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\phone.csv" />
+    <Content Include="public\pilotbot.html" />
+    <Content Include="public\PilotBots.csv" />
+    <Content Include="public\PilotFav.ico" />
+    <Content Include="public\PilotPortal.html" />
+    <Content Include="public\README.md" />
+    <Content Include="public\scripts\jquery-3.4.1.js" />
+    <Content Include="public\scripts\jquery-3.4.1.min.js" />
+    <Content Include="public\scripts\jQuery-csv.js" />
+    <Content Include="public\scripts\kendo\js\kendo.ui.core.min.js" />
+    <Content Include="public\scripts\kendo\styles\Default\editor.png" />
+    <Content Include="public\scripts\kendo\styles\Default\imagebrowser.png" />
+    <Content Include="public\scripts\kendo\styles\Default\indeterminate.gif" />
+    <Content Include="public\scripts\kendo\styles\Default\loading-image.gif" />
+    <Content Include="public\scripts\kendo\styles\Default\loading.gif" />
+    <Content Include="public\scripts\kendo\styles\Default\loading_2x.gif" />
+    <Content Include="public\scripts\kendo\styles\Default\markers.png" />
+    <Content Include="public\scripts\kendo\styles\Default\markers_2x.png" />
+    <Content Include="public\scripts\kendo\styles\Default\slider-h.gif" />
+    <Content Include="public\scripts\kendo\styles\Default\slider-v.gif" />
+    <Content Include="public\scripts\kendo\styles\Default\sprite.png" />
+    <Content Include="public\scripts\kendo\styles\Default\sprite_2x.png" />
+    <Content Include="public\scripts\kendo\styles\Default\sprite_kpi.png" />
+    <Content Include="public\scripts\kendo\styles\Default\sprite_kpi_2x.png" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSans-Bold.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSans-BoldOblique.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSans-ExtraLight.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSans-Oblique.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSans.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSansMono-Bold.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSansMono-BoldOblique.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSansMono-Oblique.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSansMono.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSerif-Bold.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSerif-BoldItalic.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSerif-Italic.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\DejaVuSerif.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\DejaVu\LICENSE.txt" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\KendoUIGlyphs.eot" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\KendoUIGlyphs.svg" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\KendoUIGlyphs.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\KendoUIGlyphs.woff" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\WebComponentsIcons.eot" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\WebComponentsIcons.svg" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\WebComponentsIcons.ttf" />
+    <Content Include="public\scripts\kendo\styles\fonts\glyphs\WebComponentsIcons.woff" />
+    <Content Include="public\scripts\kendo\styles\images\back.png" />
+    <Content Include="public\scripts\kendo\styles\images\kendoui.svg" />
+    <Content Include="public\scripts\kendo\styles\images\kendoui.ttf" />
+    <Content Include="public\scripts\kendo\styles\images\kendoui.woff" />
+    <Content Include="public\scripts\kendo\styles\images\wp8_icons.png" />
+    <Content Include="public\scripts\kendo\styles\images\wp8_inverseicons.png" />
+    <Content Include="public\scripts\kendo\styles\kendo.common-material.min.css" />
+    <Content Include="public\scripts\kendo\styles\kendo.common.min.css" />
+    <Content Include="public\scripts\kendo\styles\kendo.material-v2.min.css" />
+    <Content Include="public\scripts\kendo\styles\kendo.material.min.css" />
+    <Content Include="public\scripts\kendo\styles\kendo.material.mobile.min.css" />
+    <Content Include="public\scripts\kendo\styles\kendo.materialblack.min.css" />
+    <Content Include="public\scripts\kendo\styles\kendo.materialblack.mobile.min.css" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\editor.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\imagebrowser.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\indeterminate.gif" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\loading-image.gif" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\loading.gif" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\loading_2x.gif" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\markers.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\markers_2x.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\slider-h.gif" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\slider-v.gif" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\sprite.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\sprite_2x.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\sprite_kpi.png" />
+    <Content Include="public\scripts\kendo\styles\MaterialBlack\sprite_kpi_2x.png" />
+    <Content Include="public\scripts\kendo\styles\Material\editor.png" />
+    <Content Include="public\scripts\kendo\styles\Material\imagebrowser.png" />
+    <Content Include="public\scripts\kendo\styles\Material\indeterminate.gif" />
+    <Content Include="public\scripts\kendo\styles\Material\loading-image.gif" />
+    <Content Include="public\scripts\kendo\styles\Material\loading.gif" />
+    <Content Include="public\scripts\kendo\styles\Material\loading_2x.gif" />
+    <Content Include="public\scripts\kendo\styles\Material\markers.png" />
+    <Content Include="public\scripts\kendo\styles\Material\markers_2x.png" />
+    <Content Include="public\scripts\kendo\styles\Material\slider-h.gif" />
+    <Content Include="public\scripts\kendo\styles\Material\slider-v.gif" />
+    <Content Include="public\scripts\kendo\styles\Material\sprite.png" />
+    <Content Include="public\scripts\kendo\styles\Material\sprite_2x.png" />
+    <Content Include="public\scripts\kendo\styles\Material\sprite_kpi.png" />
+    <Content Include="public\scripts\kendo\styles\Material\sprite_kpi_2x.png" />
+    <Content Include="public\scripts\kendo\styles\textures\brushed-metal.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots1.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots10.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots11.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots12.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots13.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots2.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots3.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots4.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots5.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots6.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots7.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots8.png" />
+    <Content Include="public\scripts\kendo\styles\textures\dots9.png" />
+    <Content Include="public\scripts\kendo\styles\textures\glass-lighter.png" />
+    <Content Include="public\scripts\kendo\styles\textures\glass.png" />
+    <Content Include="public\scripts\kendo\styles\textures\highlight.png" />
+    <Content Include="public\scripts\kendo\styles\textures\hsv-gradient.png" />
+    <Content Include="public\scripts\kendo\styles\textures\hue.png" />
+    <Content Include="public\scripts\kendo\styles\textures\image-default.png" />
+    <Content Include="public\scripts\kendo\styles\textures\leather1.png" />
+    <Content Include="public\scripts\kendo\styles\textures\leather2.png" />
+    <Content Include="public\scripts\kendo\styles\textures\noise.png" />
+    <Content Include="public\scripts\kendo\styles\textures\stripe1.png" />
+    <Content Include="public\scripts\kendo\styles\textures\stripe2.png" />
+    <Content Include="public\scripts\kendo\styles\textures\stripe3.png" />
+    <Content Include="public\scripts\kendo\styles\textures\stripe4.png" />
+    <Content Include="public\scripts\kendo\styles\textures\stripe5.png" />
+    <Content Include="public\scripts\kendo\styles\textures\stripe6.png" />
+    <Content Include="public\scripts\kendo\styles\textures\transparency.png" />
+    <Content Include="public\scripts\kendo\styles\textures\transtexture.png" />
+    <None Include="public\stuff.txt" />
+    <Content Include="public\scripts\moment.js">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\scripts\summernote\font\summernote.eot" />
+    <Content Include="public\scripts\summernote\font\summernote.ttf" />
+    <Content Include="public\scripts\summernote\font\summernote.woff" />
+    <Content Include="public\scripts\summernote\font\summernote.woff2" />
+    <Content Include="public\scripts\summernote\lang\summernote-ar-AR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ar-AR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ar-AR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-az-AZ.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-az-AZ.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-az-AZ.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-bg-BG.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-bg-BG.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-bg-BG.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-ca-ES.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ca-ES.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ca-ES.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-cs-CZ.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-cs-CZ.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-cs-CZ.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-da-DK.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-da-DK.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-da-DK.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-de-DE.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-de-DE.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-de-DE.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-el-GR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-el-GR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-el-GR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-es-ES.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-es-ES.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-es-ES.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-es-EU.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-es-EU.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-es-EU.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-fa-IR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-fa-IR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-fa-IR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-fi-FI.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-fi-FI.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-fi-FI.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-fr-FR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-fr-FR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-fr-FR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-gl-ES.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-gl-ES.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-gl-ES.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-he-IL.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-he-IL.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-he-IL.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-hr-HR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-hr-HR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-hr-HR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-hu-HU.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-hu-HU.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-hu-HU.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-id-ID.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-id-ID.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-id-ID.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-it-IT.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-it-IT.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-it-IT.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-ja-JP.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ja-JP.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ja-JP.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-ko-KR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ko-KR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ko-KR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-lt-LT.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-lt-LT.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-lt-LT.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-lt-LV.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-lt-LV.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-lt-LV.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-mn-MN.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-mn-MN.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-mn-MN.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-nb-NO.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-nb-NO.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-nb-NO.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-nl-NL.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-nl-NL.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-nl-NL.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-pl-PL.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-pl-PL.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-pl-PL.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-pt-BR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-pt-BR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-pt-BR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-pt-PT.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-pt-PT.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-pt-PT.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-ro-RO.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ro-RO.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ro-RO.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-ru-RU.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ru-RU.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ru-RU.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-sk-SK.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sk-SK.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sk-SK.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-sl-SI.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sl-SI.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sl-SI.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sr-RS-Latin.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sr-RS-Latin.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-sr-RS.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sr-RS.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sr-RS.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-sv-SE.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sv-SE.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-sv-SE.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-ta-IN.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ta-IN.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-ta-IN.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-th-TH.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-th-TH.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-th-TH.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-tr-TR.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-tr-TR.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-tr-TR.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-uk-UA.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-uk-UA.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-uk-UA.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-uz-UZ.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-uz-UZ.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-uz-UZ.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-vi-VN.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-vi-VN.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-vi-VN.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-zh-CN.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-zh-CN.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-zh-CN.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\lang\summernote-zh-TW.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-zh-TW.min.js" />
+    <Content Include="public\scripts\summernote\lang\summernote-zh-TW.min.js.LICENSE.txt" />
+    <Content Include="public\scripts\summernote\plugin\databasic\summernote-ext-databasic.css" />
+    <Content Include="public\scripts\summernote\plugin\databasic\summernote-ext-databasic.js" />
+    <Content Include="public\scripts\summernote\plugin\hello\summernote-ext-hello.js" />
+    <Content Include="public\scripts\summernote\plugin\specialchars\summernote-ext-specialchars.js" />
+    <Content Include="public\scripts\summernote\summernote-lite.css" />
+    <Content Include="public\scripts\summernote\summernote-lite.js" />
+    <Content Include="views\def.css">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="public\test.html" />
+    <Content Include="package.json" />
+    <Content Include="README.md" />
+    <Content Include="views\error.pug" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\" />
+    <Folder Include="app\routes\" />
+    <Folder Include="app\routes\api\" />
+    <Folder Include="public\" />
+    <Folder Include="public\images\" />
+    <Folder Include="public\scripts\" />
+    <Folder Include="public\scripts\kendo\" />
+    <Folder Include="public\scripts\kendo\js\" />
+    <Folder Include="public\scripts\kendo\styles\" />
+    <Folder Include="public\scripts\kendo\styles\Default\" />
+    <Folder Include="public\scripts\kendo\styles\fonts\" />
+    <Folder Include="public\scripts\kendo\styles\fonts\DejaVu\" />
+    <Folder Include="public\scripts\kendo\styles\fonts\glyphs\" />
+    <Folder Include="public\scripts\kendo\styles\images\" />
+    <Folder Include="public\scripts\kendo\styles\MaterialBlack\" />
+    <Folder Include="public\scripts\kendo\styles\Material\" />
+    <Folder Include="public\scripts\kendo\styles\textures\" />
+    <Folder Include="public\scripts\summernote\" />
+    <Folder Include="public\scripts\summernote\font\" />
+    <Folder Include="public\scripts\summernote\lang\" />
+    <Folder Include="public\scripts\summernote\plugin\" />
+    <Folder Include="public\scripts\summernote\plugin\databasic\" />
+    <Folder Include="public\scripts\summernote\plugin\hello\" />
+    <Folder Include="public\scripts\summernote\plugin\specialchars\" />
+    <Folder Include="public\stylesheets\" />
+    <Folder Include="routes\" />
+    <Folder Include="views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="views\index.pug">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config" />
+  </ItemGroup>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

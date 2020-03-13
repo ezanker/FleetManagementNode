@@ -1,0 +1,1266 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>EZ Pilot Portal</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="cleartype" content="on" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0" />
+    <link rel="icon"  href="PilotFav.ico?v1.03" />
+
+
+    <link href="scripts/kendo/styles/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.mobile.min.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            overflow: hidden;
+            background: #111;
+            font-family: Arial,Verdana, sans-serif;
+        }
+
+        #contentDiv {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0;
+        }
+
+        #ButtonRow {
+            margin: 0;
+            padding: 2px 4px;
+            background-color: #607D8B;
+            color: white;
+        }
+
+        .TitleText{
+            font-size: 12px;
+            font-weight: 800;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.65);
+            color: #dbcec6;
+            position: absolute;
+            right: 4px;
+            top: 4px;
+        }
+
+        .padLeft{
+            margin-left: 0.67em;
+        }
+        .padLeftBig {
+            margin-left: 2em;
+        }
+        .BotWrapper {
+            display: inline-block;
+            border: 0px solid rgba(0,0,0,0.075);
+            padding: 3px 10px;
+            border-radius: 4px;
+            background-color: rgba(0,0,0,0.05);
+            box-shadow: inset -1px -1px 1px rgba(255,255,255,0.2),
+                inset 1px 1px 1px rgba(0,0,0,0.2)                
+        }
+
+
+        .lbl{
+            font-size: 88%;
+            color: #ddd;
+        }
+
+
+        #thebots{
+            position: absolute;
+            left: 0; right: 0; bottom: 0; top: 58px;
+        }
+
+        .ifr {
+            width: 99.8%;
+            background: #FFF;
+            border: 0px solid rgba(0,0,0,0.43);
+            margin-bottom: 6px;
+            min-height: 680px;
+        }
+        .ifrV {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 33.1%;
+            background: #FFF;
+            border: 0px solid rgba(0,0,0,0.43);
+            margin-bottom: 0px;
+        }
+
+
+        .hidden {
+            display: none;
+        }
+
+        .cdwraper > span{
+            padding: 8px;
+            background: rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.25);
+            margin-right: 0px;
+            border-radius: 4px;
+        }
+        .TheTimes {
+            font-size: 13px;
+            position: absolute;
+            z-index: 300;
+            top: 22px;
+            right: 4px;
+            color: #ddd;
+        }
+
+        .TableTTInfo, #phoneTable  {
+            border-spacing: 0;
+            border-collapse:collapse;
+        }
+        .TableTTInfo td{
+            vertical-align: top;
+            padding: 4px;
+            border-bottom: 1px solid #aaa;
+            text-align:right;
+        }
+        .TableTTInfo td:nth-child(2){
+            text-align:left;
+        }
+
+
+        #phoneTable thead{
+            background: #efefef;
+            color: #333;
+        }
+
+        #phoneTable td, #phoneTable th{
+            vertical-align: top;
+            padding: 8px;
+            border: 1px solid rgba(255,255,2555, .1);
+            text-align:left;
+        }
+        #phoneTable tbody tr:nth-child(even){
+            background-color: rgba(255,255,2555, .05);
+        }
+
+        .MaxButton, .PUButton, .PortLabelButton, .RecentButton{
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+
+        #WhichPort {
+            position: absolute; 
+            background-color: rgba(255,255,255,0.68);
+            left: 0; right: 0; top: 0; bottom: 0;
+        }
+        #WhichPort .inner{
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%,-50%);
+            text-align: center;
+        }
+        .ChoosePort {
+            height: 120px;
+            width: 180px;
+        }
+        .CancelPort {
+            height: 88px;
+            width: 100%;
+        }
+        .innerText {
+            font-weight: bold;
+            background-color: #e2e2e2;
+            padding: 8px;
+        }
+
+        #NotePadFrame1, #NotePadFrame2, #NotePadFrame3 {
+            display: none;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            z-index: 10000;
+            width: 480px; 
+            height: 60vh;
+            background: #FFF;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            border: 0;
+        }        
+
+    </style>
+</head>
+<body>
+    <ul id="context-menu1"></ul>
+    <ul id="context-menu2"></ul>
+    <ul id="context-menu3"></ul>
+
+    <div id="contentDiv">
+        <div id="ButtonRow">
+            <span class="TitleText">
+                Pilot Portal
+            </span>
+
+            <span>
+                <button id="btnToggle" type="button" title="Click to toggle between horizontal and vertical layout">
+                    <span class="k-icon k-i-group"></span>
+                </button>
+                <label class="padLeft">
+                    <span class="lbl">Show:</span>
+                    <input id="ddShow" style="width: 62px;" title="Select number of pilot bots to view" />
+                </label>
+            </span>
+
+            <span id="FirstWrapper" class="padLeft BotWrapper">
+                <label>
+                    <span class="lbl" title="Select pilot bot for top port">1:</span>
+                    <input id="dd1" style="width: 116px;"  />
+                </label>
+                <span id="TopDetails" class="lbl">
+                    <span class="k-icon k-i-info" style="font-size: 22px;"></span>
+                </span>
+
+                <span id="CountDownWrapper1" class="padLeft cdwraper">
+                    <span id="btnCountdown1" class="cdbutton" title="Click to start/restart a 15 minute countdown"><span class="k-icon k-i-clock"></span></span>
+                    <span id="btnCancelCountdown1" class="cdcancel" title="Click to cancel the countdown"><span class="k-icon k-i-reset"></span></span>
+                </span>
+                <button id="btnSlack1" type="button" class="k-button PUButton" data-role="button" >S</button>
+                <button id="btnNotes1" type="button" class="k-button PUButton NotePadFrameClass" data-role="button" >N</button>
+            </span>
+
+            <span id="SecondWrapper" class="padLeftBig BotWrapper hidden">
+                <label>
+                    <span class="lbl" title="Select pilot bot for middle port">2:</span>
+                    <input id="dd2" style="width: 116px;"  />
+                </label>
+                <span id="MidDetails" class="lbl">
+                    <span class="k-icon k-i-info" style="font-size: 22px;"></span>
+                </span>
+
+                <span id="CountDownWrapper2" class="padLeft cdwraper">
+                    <span id="btnCountdown2" class="cdbutton" title="Click to start/restart a 15 minute countdown"><span class="k-icon k-i-clock"></span></span>
+                    <span id="btnCancelCountdown2" class="cdcancel" title="Click to cancel the countdown"><span class="k-icon k-i-reset"></span></span>
+                </span>
+                <button id="btnSlack2" type="button" class="k-button PUButton" data-role="button" >S</button>
+                <button id="btnNotes2" type="button" class="k-button PUButton NotePadFrameClass" data-role="button" >N</button>
+            </span>
+
+            <span id="ThirdWrapper" class="padLeftBig BotWrapper hidden">
+                <label>
+                    <span class="lbl" title="Select pilot bot for bottom port">3:</span>
+                    <input id="dd3" style="width: 116px;"  />
+                </label>
+                <span id="BotDetails" class="lbl">
+                    <span class="k-icon k-i-info" style="font-size: 22px;"></span>
+                </span>
+
+                <span id="CountDownWrapper3" class="padLeft cdwraper">
+                    <span id="btnCountdown3" class="cdbutton" title="Click to start/restart a 15 minute countdown"><span class="k-icon k-i-clock"></span></span>
+                    <span id="btnCancelCountdown3" class="cdcancel" title="Click to cancel the countdown"><span class="k-icon k-i-reset"></span></span>
+                </span>
+                <button id="btnSlack3" type="button" class="k-button PUButton" data-role="button" >S</button>
+                <button id="btnNotes3" type="button" class="k-button PUButton NotePadFrameClass" data-role="button" >N</button>
+            </span>
+
+            <span id="popupsCont" class="padLeftBig">
+                <button id="btnDevops" type="button" class="k-button PUButton" data-role="button" title="Popup Devops">D</button>
+                <button id="btnJira" type="button" class="k-button PUButton" data-role="button" title="Toggle visibility of the Jira ticket widget">J</button>
+                <button id="btnBackup" type="button" class="k-button PUButton" data-role="button" title="Popup backup UI">B</button>
+                <button id="btnPhone" type="button" class="k-button PUButton" data-role="button" title="Phone numbers">P</span></button>
+            </span>
+
+            <label class="padLeft">
+                <span id="lblRecent" class="lbl">Recent:</span>
+            </label>
+            <span id="RecentList">
+
+            </span>
+ 
+
+            <span class="TheTimes">
+                <span class="k-icon k-i-globe" style="font-size: 24px;"></span>
+            </span>
+
+        </div>
+
+        <div id="thebots" style=" overflow-y: auto;">
+            <iframe id="F1" class="ifr ifrtop" src="pilotbot.html"></iframe>
+            <iframe id="F2" class="ifr ifrmid hidden" src="pilotbot.html"></iframe>
+            <iframe id="F3" class="ifr ifrbot hidden" src="pilotbot.html"></iframe>
+        </div>
+    </div>
+
+    <iframe id="NotePadFrame1" src="about:blank" class="NotePadFrameClass"></iframe>
+    <iframe id="NotePadFrame2" src="about:blank" class="NotePadFrameClass"></iframe>
+    <iframe id="NotePadFrame3" src="about:blank" class="NotePadFrameClass"></iframe>
+    <!-- popup window container -->
+    <div style="display: none;">
+        <div id="winPU"></div>
+        <div id="winMax"></div>
+
+        <div id="winPhone">
+            <table id="phoneTable">
+                <thead>
+                    <tr>
+                        <th>DEPARTMENT</th>
+                        <th>NAME</th>
+                        <th>PHONE</th>
+                        <th>REASON</th>
+                    </tr>
+                </thead>
+                <tbody id="phoneBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="WhichPort" class="hidden"  data-bar="">
+        <div class="inner">
+            <div class="innerText">Select Port for recent BOT:</div>
+            <br />          
+            <button data-port="1" id="RecentPort1" type="button" class="k-button ChoosePort" >Port 1</button>&nbsp;&nbsp;
+            <button data-port="2" id="RecentPort2" type="button" class="k-button ChoosePort" >Port 2</button>&nbsp;&nbsp;
+            <button data-port="3" id="RecentPort3" type="button" class="k-button ChoosePort" >Port 3</button>
+            <br /><br />
+            <button id="RecentPortCancel" type="button" class="k-button k-primary CancelPort" >Cancel</button>
+
+        </div>
+    </div>
+
+    <script id="InfoTooltipTemplate" type="text/x-kendo-template">
+        <div>
+            <table class="TableTTInfo">
+                <tbody>
+                    <tr>
+                        <td>BAR:</td>
+                        <td>#= BAR #</td>
+                    </tr>
+                    <tr>
+                        <td>Store ID:</td>
+                        <td>#= STORE_SITE_ID #</td>
+                    </tr>
+                    <tr>
+                        <td>Phone:</td>
+                        <td>#= PHONE #</td>
+                    </tr>
+                    <tr>
+                        <td>Schedules:</td>
+                        <td>#= SCHEDULES #</td>
+                    </tr>
+                    <tr>
+                        <td>Timezone:</td>
+                        <td>#= TIMEZONE #</td>
+                    </tr>
+                    <tr>
+                        <td>Local Time:</td>
+                        <td>#= LOCAL #</td>
+                    </tr>                    
+                </tbody>
+            </table>
+        </div>
+    </script>
+
+    <script data-jsd-embedded data-key="5641d795-dc64-45d0-a31e-7ebb24d3ade7" data-base-url="https://jsd-widget.atlassian.com" src="https://jsd-widget.atlassian.com/assets/embed.js"></script>
+
+    <script src="scripts/jquery-3.4.1.min.js?v=1"></script>
+    <script src="scripts/kendo/js/kendo.ui.core.min.js?v=1"></script>
+    <script src="scripts/jQuery-csv.js?v=1"></script>
+
+    <script>
+        var PersistFunctions = {
+            SaveNumPortsKey: "NumPortsKey",
+            SaveLayoutOrientKey: "LayoutOrientation",
+            SaveRecentKey: "RecentPilotBARKey",
+
+            SaveNumPorts: function (NumPorts) {
+                localStorage.setItem(PersistFunctions.SaveNumPortsKey, NumPorts);
+            },
+            GetNumPorts: function () {
+                var NumPorts = localStorage.getItem(PersistFunctions.SaveNumPortsKey);
+                return NumPorts ? NumPorts : 1;
+            },
+
+            SaveLayout: function (layout) {
+                localStorage.setItem(PersistFunctions.SaveLayoutOrientKey, layout);
+            },
+            GetLayout: function () {
+                var layout = localStorage.getItem(PersistFunctions.SaveLayoutOrientKey);
+                return layout ? layout : "horizontal";
+            },
+            SaveRecent: function (recent) {
+                localStorage.setItem(PersistFunctions.SaveRecentKey, JSON.stringify(recent));
+            },
+            GetRecent: function () {
+                var recent = localStorage.getItem(PersistFunctions.SaveRecentKey);
+                return recent ? JSON.parse(recent) : [];
+            },
+
+        };
+
+        var MainModule = function () {
+            var me = {};
+
+            var datacsvfile = "./PilotBots.csv?v=1.1";
+            var phonecsvfile = "./phone.csv?v=1.1";
+            var slackBaseUrl = "https://app.slack.com/client/T3PBYKHC4/"; //"https://badgertechnologies.slack.com/archives/";  
+            var BARs = [];
+            var recent = [];
+            var PHONES = [];
+
+            var EndTime = Date.now();
+            var Timer;
+
+            var EndTime1 = Date.now();
+            var Timer1;
+            var EndTime2 = Date.now();
+            var Timer2;
+            var EndTime3 = Date.now();
+            var Timer3;
+
+            var CurLayout = "horizontal";
+            var CurDataItem1;
+            var CurDataItem2;
+            var CurDataItem3;
+
+            var InfoTemplate = kendo.template($("#InfoTooltipTemplate").html());
+
+            me.config = {
+                ContentDivElem: $("#contentDiv"),
+                DD1Elem: $("#dd1"),
+                DD2Elem: $("#dd2"),
+                DD3Elem: $("#dd3"),
+                DDShowElem: $("#ddShow"),
+                F1Elem: $("#F1"),
+                F2Elem: $("#F2"),
+                F3Elem: $("#F3"),
+                TopDetailsElem: $("#TopDetails"),
+                MidDetailsElem: $("#MidDetails"),
+                BotDetailsElem: $("#BotDetails"),
+                thebotsElem: $("#thebots"),
+                Wrap1: $("#FirstWrapper"),
+                Wrap2: $("#SecondWrapper"),
+                Wrap3: $("#ThirdWrapper"),
+                MaxPortWinElem: $("#winMax"),
+                PhoneWinELEM: $("#winPhone"),
+                ToggleLayoutBtnElem: $("#btnToggle"),
+                DevopsPopupBtnElem: $("#btnDevops"),
+                SlackBtn1Elem: $("#btnSlack1"),
+                SlackBtn2Elem: $("#btnSlack2"),
+                SlackBtn3Elem: $("#btnSlack3"),
+                SlackCtxt1Elem: $("#context-menu1"),
+                SlackCtxt2Elem: $("#context-menu2"), 
+                SlackCtxt3Elem: $("#context-menu3"), 
+                JiraBtnElem: $("#btnJira"),
+                RecentListElem: $("#RecentList"),
+                RecentLabelElem: $("#lblRecent"),
+                BackupUIBtnElem: $("#btnBackup"),
+                NotesBtn1Elem: $("#btnNotes1"),
+                NotesBtn2Elem: $("#btnNotes2"),
+                NotesBtn3Elem: $("#btnNotes3"),
+                NotePadFrame1Elem: $("#NotePadFrame1"),
+                NotePadFrame2Elem: $("#NotePadFrame2"),
+                NotePadFrame3Elem: $("#NotePadFrame3"),
+                PhoneBtnElem: $("#btnPhone"),
+            };
+
+            me.init = function (settings) {
+                $.extend(me.config, settings);
+
+                recent = PersistFunctions.GetRecent();
+                if (!recent) recent = [];
+
+                CreateControls();
+                me.LoadCSV();
+                setTimeout(me.LoadPhoneCSV, 500);
+                bindUIActions();
+            };
+
+            var CreateControls = function () {
+                var numPorts = PersistFunctions.GetNumPorts();
+
+                me.config.DDShowElem.kendoDropDownList({
+                    dataSource: [1, 2, 3],
+                    select: function (e) {
+                        var item = e.dataItem;
+                        PersistFunctions.SaveNumPorts(item);
+                        ShowHidePorts(item);
+                    },
+                    dataBound: function (e) {
+                        e.sender.select(numPorts - 1);
+                        ShowHidePorts(numPorts);
+                        LoadRecentMenu();
+                    }
+                });
+
+                me.config.ToggleLayoutBtnElem.kendoButton({
+                    click: function (e) {
+                        //toggle layout
+                        if (CurLayout == "horizontal") {
+                            CurLayout = "vertical";
+                        } else {
+                            CurLayout = "horizontal";
+                        }
+                        // change layout and reload ports and persist layout
+                        me.Layout();
+                        me.reload();
+
+                        PersistFunctions.SaveLayout(CurLayout);
+                    }
+                });
+
+                me.config.MaxPortWinElem.kendoWindow({
+                    visible: false,
+                    modal: true,
+                    iframe: true,
+                    actions: ["Maximize", "Close"],
+                    resizable: true,
+                    width: "98%",
+                    height: '94vh',
+                    animation: {
+                        open: { effects: "zoomIn slideIn:left", duration: 400 },
+                        close: { effects: "zoomIn slideIn:right", duration: 300, reverse: true }
+                    },
+                    content: "about:blank",
+                    close: function () {
+                        me.config.MaxPortWinElem.find("iframe").eq(0).prop("src", "");
+                    },
+                });
+
+                me.config.PhoneWinELEM.kendoWindow({
+                    visible: false,
+                    modal: true,
+                    actions: ["Close"],
+                    resizable: false,
+                    maxWidth: "98%",
+                    maxHeight: '94vh',
+                    animation: {
+                        open: { effects: "zoomIn slideIn:left", duration: 400 },
+                        close: { effects: "zoomIn slideIn:right", duration: 300, reverse: true }
+                    },
+                 });
+
+
+
+                me.config.TopDetailsElem.kendoTooltip({
+                    content: function(e) {
+                        var t = "Select a BAR";
+                        if (CurDataItem1) {
+                            CurDataItem1.LOCAL = GetBotLocalTime(CurDataItem1.TIMEZONE);
+                            t = InfoTemplate(CurDataItem1); //Execute the template
+                        }
+                        return t;
+                    }
+                });
+                me.config.MidDetailsElem.kendoTooltip({
+                    content: function(e) {
+                        var t = "Select a BAR";
+                        if (CurDataItem2) {
+                            CurDataItem2.LOCAL = GetBotLocalTime(CurDataItem2.TIMEZONE);
+                            t = InfoTemplate(CurDataItem2); //Execute the template
+                        }
+                        return t;
+                    }
+                });
+                me.config.BotDetailsElem.kendoTooltip({
+                    content: function(e) {
+                        var t = "Select a BAR";
+                        if (CurDataItem3) {
+                            CurDataItem3.LOCAL = GetBotLocalTime(CurDataItem3.TIMEZONE);
+                            t = InfoTemplate(CurDataItem3); //Execute the template
+                        }
+                        return t;
+                    }
+                });
+                $(".TheTimes").kendoTooltip({
+                    content: function(e) {
+                        var t = "Selected BOTs Local Times";
+                        var msg = "";
+                        if (CurDataItem1) {
+                            msg += "Local times:<br />"
+                            var lt1 = GetBotLocalTime(CurDataItem1.TIMEZONE);
+                            msg += CurDataItem1.BAR + ":  " + lt1;
+                        }
+                        if (CurDataItem2 && !me.config.F2Elem.hasClass("hidden")) {
+                            var lt2 = GetBotLocalTime(CurDataItem2.TIMEZONE);
+                            msg += "<br />" + CurDataItem2.BAR + ":  " + lt2;
+                        }
+                        if (CurDataItem3 && !me.config.F3Elem.hasClass("hidden")) {
+                            var lt3 = GetBotLocalTime(CurDataItem3.TIMEZONE);
+                            msg += "<br />" + CurDataItem3.BAR + ":  " + lt3;
+                        }
+                        return msg || t;
+                    }
+                });
+
+
+                //Slack Context menus
+                me.config.SlackCtxt1Elem.kendoContextMenu({
+                    target: "#btnSlack1",
+                    showOn: "click",
+                    alignToAnchor: true,
+                    select: function(e) {
+                        var uid = $(e.item).data("uid");
+                        var dItem = e.sender.dataSource.getByUid(uid);
+                        OpenSlack(dItem.SlackURL);
+                    },
+                });
+                me.config.SlackCtxt2Elem.kendoContextMenu({
+                    target: "#btnSlack2",
+                    showOn: "click",
+                    alignToAnchor: true,
+                    select: function(e) {
+                        var uid = $(e.item).data("uid");
+                        var dItem = e.sender.dataSource.getByUid(uid);
+                        OpenSlack(dItem.SlackURL);
+                    }
+                });
+                me.config.SlackCtxt3Elem.kendoContextMenu({
+                    target: "#btnSlack3",
+                    showOn: "click",
+                    alignToAnchor: true,
+                    select: function(e) {
+                        var uid = $(e.item).data("uid");
+                        var dItem = e.sender.dataSource.getByUid(uid);
+                        OpenSlack(dItem.SlackURL);
+                    }
+                });
+
+                //setInterval(WriteLocalTimes, 10000);
+            }
+
+            var UpdateSlackMenus = function(){
+                if (CurDataItem1){
+                    var ctx = me.config.SlackCtxt1Elem.data("kendoContextMenu");
+                    ctx.setOptions({dataSource: CurDataItem1.SLACKS});
+                }
+                if (CurDataItem2){
+                    var ctx = me.config.SlackCtxt2Elem.data("kendoContextMenu");
+                    ctx.setOptions({dataSource: CurDataItem2.SLACKS});
+
+                }
+                if (CurDataItem3){
+                    var ctx = me.config.SlackCtxt3Elem.data("kendoContextMenu");
+                    ctx.setOptions({dataSource: CurDataItem3.SLACKS});
+                }
+
+
+                $(".TheTimes").data("kendoTooltip").refresh();
+            };
+
+            var WriteLocalTimes = function () {
+                var msg = "";
+                if (CurDataItem1) {
+                    var lt1 = GetBotLocalTime(CurDataItem1.TIMEZONE);
+                    msg += CurDataItem1.BAR + "(" + CurDataItem1.TIMEZONE + "): " + lt1;
+                    CurDataItem1.LOCAL = lt1;
+                }
+                if (CurDataItem2 && !me.config.F2Elem.hasClass("hidden")) {
+                    var lt2 = GetBotLocalTime(CurDataItem2.TIMEZONE);
+                    msg += "<br />" + CurDataItem2.BAR + "(" + CurDataItem2.TIMEZONE + "): " + lt2;
+                    CurDataItem2.LOCAL = lt2;
+                }
+                if (CurDataItem3 && !me.config.F3Elem.hasClass("hidden")) {
+                    var lt3 = GetBotLocalTime(CurDataItem3.TIMEZONE);
+                    msg += "<br />" + CurDataItem3.BAR + "(" + CurDataItem3.TIMEZONE + "): " + lt3;
+                    CurDataItem3.LOCAL = lt3;
+                }
+                //$(".TheTimes").html(msg).prop("title", msg);
+
+            };
+
+            var bindUIActions = function () {
+                $(window).on("resize orientationchange", function () {
+                    throttledResize();
+                });
+
+                me.config.ContentDivElem.on('click', '.cdbutton', function () {
+                    var ID = $(this).prop("id");
+                    var now = Date.now();
+                    if (ID == "btnCountdown1") {
+                        EndTime1 = new Date(now + (15 * 60000));
+                        $("#btnCountdown1").text("15:00");
+                        if (Timer1) clearInterval(Timer1);
+                        Timer1 = setInterval(TimerInterval1, 1000);
+                    } else if (ID == "btnCountdown2") {
+                        EndTime2 = new Date(now + (15 * 60000));
+                        $("#btnCountdown2").text("15:00");
+                        if (Timer2) clearInterval(Timer2);
+                        Timer2 = setInterval(TimerInterval2, 1000);
+                    } else if (ID == "btnCountdown3") {
+                        EndTime3 = new Date(now + (15 * 60000));
+                        $("#btnCountdown3").text("15:00");
+                        if (Timer3) clearInterval(Timer3);
+                        Timer3 = setInterval(TimerInterval3, 1000);
+                    }
+                });
+                me.config.ContentDivElem.on('click', '.cdcancel', function () {
+                    var ID = $(this).prop("id");
+                    if (ID == "btnCancelCountdown1") {
+                        EndTime1 = Date.now();
+                        if (Timer1) clearInterval(Timer1);
+                        $("#btnCountdown1").html('<span class="k-icon k-i-clock"></span>');
+                    } else if (ID == "btnCancelCountdown2") {
+                        EndTime2 = Date.now();
+                        if (Timer2) clearInterval(Timer2);
+                        $("#btnCountdown2").html('<span class="k-icon k-i-clock"></span>');
+                    } else if (ID == "btnCancelCountdown3") {
+                        EndTime3 = Date.now();
+                        if (Timer3) clearInterval(Timer3);
+                        $("#btnCountdown3").html('<span class="k-icon k-i-clock"></span>');
+                    }
+                });
+
+                me.config.DevopsPopupBtnElem.on("click", function () {
+                    var URL = "https://dev.azure.com/jblprd/Badger/";
+                    var Title = "Devops";
+                    window.open(URL, "_blank", "height=600,width=800,toolbar=yes,scrollbars=yes,resizable=yes");
+                    return false;
+                });
+
+                me.config.JiraBtnElem.on("click", function () {
+                    $("#jsd-widget").toggle(800);
+                    return false;
+                });  
+
+                me.config.BackupUIBtnElem.on("click", function () {
+                    var URL = "https://skybox.badger-technologies.com/All_Dash_Setup.html";                    
+                    window.open(URL, "_blank", "height=600,width=800,toolbar=yes,scrollbars=yes,resizable=yes");
+                    return false;
+                });
+
+                me.config.RecentLabelElem.on('click', function(){
+                    me.config.RecentListElem.toggle(0);
+                });  
+
+                me.config.RecentListElem.on("click", ".RecentButton", function (e) {                    
+                    var bar = $(this).data("bar");
+                    var numPorts = GetNumPorts();
+                    if (numPorts > 1){
+                        if (numPorts == 2){
+                            $("#RecentPort3").hide();
+                        } else {
+                            $("#RecentPort3").show();
+                        }
+                        $("#WhichPort").data("bar", bar).removeClass("hidden");
+ 
+                    } else {
+                        //set the dropdown to this bar
+                        var dd = me.config.DD1Elem.data("kendoDropDownList");
+                        dd.select(function(dataItem) {
+                            return dataItem.BAR == bar;
+                        });
+                        var item = dd.dataItem();
+                        CurDataItem1 = item;
+                        me.config.TopDetailsElem.data("kendoTooltip").refresh();
+                        me.config.F1Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                        $("#btnCancelCountdown1").trigger("click");
+                        UpdateSlackMenus();
+                    }
+                });  
+
+                $("#RecentPortCancel").on('click', function(){                    
+                    $("#WhichPort").addClass("hidden");
+                });
+
+                $("#WhichPort").on('click', '.ChoosePort', function(e){
+                    var port = $(this).data("port");
+                    var bar =  $("#WhichPort").data("bar");
+                    if (port == 3) {
+                        var dd = me.config.DD3Elem.data("kendoDropDownList");
+                        dd.select(function(dataItem) {
+                            return dataItem.BAR == bar;
+                        });
+                        var item = dd.dataItem();
+                        CurDataItem3 = item;
+                        me.config.BotDetailsElem.data("kendoTooltip").refresh();
+                        me.config.F3Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                        $("#btnCancelCountdown3").trigger("click");
+                    } else if (port == 2){
+                        var dd = me.config.DD2Elem.data("kendoDropDownList");
+                        dd.select(function(dataItem) {
+                            return dataItem.BAR == bar;
+                        });
+                        var item = dd.dataItem();
+                        CurDataItem2 = item;
+                        me.config.MidDetailsElem.data("kendoTooltip").refresh();
+                        me.config.F2Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                        $("#btnCancelCountdown2").trigger("click");
+  
+                    } else {
+                        var dd = me.config.DD1Elem.data("kendoDropDownList");
+                        dd.select(function(dataItem) {
+                            return dataItem.BAR == bar;
+                        });
+                        var item = dd.dataItem();
+                        CurDataItem1 = item;
+                        me.config.TopDetailsElem.data("kendoTooltip").refresh();
+                        me.config.F1Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                        $("#btnCancelCountdown1").trigger("click");
+                     }
+                     UpdateSlackMenus();
+ 
+
+
+                    $("#WhichPort").addClass("hidden");
+                });
+
+                $(document).on('click', function(event){
+                    $target = $(event.target);
+                    if(!$target.closest('.NotePadFrameClass').length) {
+                        me.config.NotePadFrame1Elem.prop("src", "about:blank").slideUp(300);
+                        me.config.NotePadFrame2Elem.prop("src", "about:blank").slideUp(300);
+                        me.config.NotePadFrame3Elem.prop("src", "about:blank").slideUp(300);
+                    }       
+
+                    if($target.hasClass('k-overlay')) {
+                        me.config.PhoneWinELEM.data("kendoWindow").close();
+                    }          
+                });
+
+                me.config.NotesBtn1Elem.on('click', function(){
+                    me.config.NotePadFrame2Elem.prop("src", "about:blank").slideUp(300);
+                    me.config.NotePadFrame3Elem.prop("src", "about:blank").slideUp(300);
+                    var NotePadURL = me.GetNotepadURL(CurDataItem1);
+                    var IsVisible = me.config.NotePadFrame1Elem.is(":visible");
+                    if (IsVisible) {
+                        me.config.NotePadFrame1Elem.prop("src", "about:blank").slideUp(300);
+                    } else {
+                        var offset = me.config.NotesBtn1Elem.offset();
+                        var l = offset.left - me.config.NotePadFrame1Elem.width() + me.config.NotesBtn1Elem.outerWidth(true);
+                        if (l < 0) l = 0;
+                        me.config.NotePadFrame1Elem.css("left", l);
+                        me.config.NotePadFrame1Elem.css("top", offset.top + me.config.NotesBtn1Elem.outerHeight(true) + 1);
+                        me.config.NotePadFrame1Elem.prop("src", NotePadURL).slideDown(600);
+                    }
+                });
+
+                me.config.NotesBtn2Elem.on('click', function(){
+                    me.config.NotePadFrame1Elem.prop("src", "about:blank").slideUp(300);
+                    me.config.NotePadFrame3Elem.prop("src", "about:blank").slideUp(300);
+                     var NotePadURL = me.GetNotepadURL(CurDataItem2);
+                    var IsVisible = me.config.NotePadFrame2Elem.is(":visible");
+                    if (IsVisible) {
+                        me.config.NotePadFrame2Elem.prop("src", "about:blank").slideUp(300);
+                    } else {
+                        var offset = me.config.NotesBtn2Elem.offset();
+                        var l = offset.left - me.config.NotePadFrame2Elem.width() + me.config.NotesBtn2Elem.outerWidth(true);
+                        if (l < 0) l = 0;
+                        me.config.NotePadFrame2Elem.css("left", l);
+                        me.config.NotePadFrame2Elem.css("top", offset.top + me.config.NotesBtn2Elem.outerHeight(true) + 1);
+                        me.config.NotePadFrame2Elem.prop("src", NotePadURL).slideDown(600);
+                    }
+                });
+
+                me.config.NotesBtn3Elem.on('click', function(){
+                    me.config.NotePadFrame2Elem.prop("src", "about:blank").slideUp(300);
+                    me.config.NotePadFrame1Elem.prop("src", "about:blank").slideUp(300);
+                     var NotePadURL = me.GetNotepadURL(CurDataItem3);
+                    var IsVisible = me.config.NotePadFrame3Elem.is(":visible");
+                    if (IsVisible) {
+                        me.config.NotePadFrame3Elem.prop("src", "about:blank").slideUp(300);
+                    } else {
+                        var offset = me.config.NotesBtn3Elem.offset();
+                        var l = offset.left - me.config.NotePadFrame3Elem.width() + me.config.NotesBtn3Elem.outerWidth(true);
+                        if (l < 0) l = 0;
+                        me.config.NotePadFrame3Elem.css("left", l);
+                        me.config.NotePadFrame3Elem.css("top", offset.top + me.config.NotesBtn3Elem.outerHeight(true) + 1);
+                        me.config.NotePadFrame3Elem.prop("src", NotePadURL).slideDown(600);
+                    }
+                });
+
+                me.config.PhoneBtnElem.on('click', function(){
+                    var kendoWindow = me.config.PhoneWinELEM.data("kendoWindow");
+                    kendoWindow.title("Phone Numbers").center().open();  
+                });
+            };
+
+            me.GetNotepadURL = function (BAR) {
+                var NotePadURL = "http://10.210.232.187:3000?DB=" + BAR.DB;
+                if (is.propertyDefined(BAR, 'NOTEPADURL') && BAR.NOTEPADURL) {
+                    NotePadURL = BAR.NOTEPADURL;
+                }
+                console.log("Notepad URL: ", NotePadURL);
+                return NotePadURL;
+            };            
+
+            var OpenSlack = function(URL){
+                window.open(URL, "_blank", "height=600,width=800,toolbar=yes,scrollbars=yes,resizable=yes");
+            };
+
+            var throttledResize = kendo.throttle(function () {
+                var h = 680;
+                if (CurLayout == "vertical") {
+                    h = me.config.thebotsElem.height() - 10;
+                    me.config.F1Elem.height(h);
+                    me.config.F2Elem.height(h);
+                    me.config.F3Elem.height(h);
+                } else {
+                    if (me.config.F2Elem.hasClass("hidden")) {
+                        h = me.config.thebotsElem.height() - 10;
+                    }
+                    me.config.F1Elem.height(h);
+                    me.config.F2Elem.height(680);
+                    me.config.F3Elem.height(680);
+                }
+
+            }, 100);
+
+            me.reload = function () {
+                if (CurDataItem1) {
+                    me.config.F1Elem[0].contentWindow.LoadBAR(CurDataItem1, CurLayout);
+                }
+                if (CurDataItem2) {
+                    me.config.F2Elem[0].contentWindow.LoadBAR(CurDataItem2, CurLayout);
+                }
+                if (CurDataItem3) {
+                    me.config.F3Elem[0].contentWindow.LoadBAR(CurDataItem3, CurLayout);
+                }
+            };
+
+            var ShowHidePorts = function (item) {
+                if (item == 1) {
+                    me.config.Wrap3.addClass("hidden");
+                    me.config.F3Elem.addClass("hidden");
+                    me.config.Wrap2.addClass("hidden");
+                    me.config.F2Elem.addClass("hidden");
+                    $("#btnCancelCountdown2").trigger("click");
+                    $("#btnCancelCountdown3").trigger("click");
+
+                } else if (item == 2) {
+                    me.config.Wrap3.addClass("hidden");
+                    me.config.F3Elem.addClass("hidden");
+                    me.config.Wrap2.removeClass("hidden");
+                    me.config.F2Elem.removeClass("hidden");
+                    $("#btnCancelCountdown3").trigger("click");
+
+                } else {
+                    me.config.Wrap3.removeClass("hidden");
+                    me.config.F3Elem.removeClass("hidden");
+                    me.config.Wrap2.removeClass("hidden");
+                    me.config.F2Elem.removeClass("hidden");
+                }
+                me.Layout();
+                me.reload();
+                throttledResize();
+            }
+
+            me.Layout = function () {
+                var numvisible = 3;
+                var w = "32.8%";
+                var l2 = "33.6%";
+                if (me.config.F2Elem.hasClass("hidden")) {
+                    numvisible = 1;
+                    w = "99.8%";
+                } else if (me.config.F3Elem.hasClass("hidden")) {
+                    numvisible = 2;
+                    w = "49.8%";
+                    l2 = "50.2%";
+                }
+
+                if (CurLayout == "vertical") {
+                    me.config.F1Elem.removeClass("ifr").addClass("ifrV").css("width", w).css("left", "0");
+                    me.config.F2Elem.removeClass("ifr").addClass("ifrV").css("width", w).css("left", l2);
+                    me.config.F3Elem.removeClass("ifr").addClass("ifrV").css("width", w).css("right", "0");
+                } else {
+                    me.config.F1Elem.removeClass("ifrV").addClass("ifr").css("width", "99.8%");
+                    me.config.F2Elem.removeClass("ifrV").addClass("ifr").css("width", "99.8%");
+                    me.config.F3Elem.removeClass("ifrV").addClass("ifr").css("width", "99.8%");
+
+                }
+
+                throttledResize();
+
+            };
+
+            me.MaximizePort = function (URL, title) {
+                me.config.MaxPortWinElem.find("iframe").eq(0).prop("src", URL);
+                var kendoWindow = me.config.MaxPortWinElem.data("kendoWindow");
+                kendoWindow.title(title).center().open();
+                return false;
+            };
+
+
+            var TimerInterval1 = function () {
+                var now = Date.now();
+                var diff = EndTime1 - now;
+
+                if (diff > 0) {
+                    var seconds = (diff / 1000).toFixed(0);
+                    var minutes = Math.floor(seconds / 60);
+                    seconds = Math.floor(seconds % 60);
+                    seconds = (seconds >= 10) ? seconds : "0" + seconds;
+                    var txt = minutes + ":" + seconds;
+                    $("#btnCountdown1").text(txt);
+                } else {
+                    clearInterval(Timer1);
+                    //let user know
+                    $("#btnCountdown1").html('<span class="k-icon k-i-clock"></span>');
+                    alert("Port 1 15 minute countdown complete.");
+                }
+            }
+            var TimerInterval2 = function () {
+                var now = Date.now();
+                var diff = EndTime2 - now;
+
+                if (diff > 0) {
+                    var seconds = (diff / 1000).toFixed(0);
+                    var minutes = Math.floor(seconds / 60);
+                    seconds = Math.floor(seconds % 60);
+                    seconds = (seconds >= 10) ? seconds : "0" + seconds;
+                    var txt = minutes + ":" + seconds;
+                    $("#btnCountdown2").text(txt);
+                } else {
+                    clearInterval(Timer2);
+                    //let user know
+                    $("#btnCountdown2").html('<span class="k-icon k-i-clock"></span>');
+                    alert("Port 2 15 minute countdown complete.");
+                }
+            }
+            var TimerInterval3 = function () {
+                var now = Date.now();
+                var diff = EndTime3 - now;
+
+                if (diff > 0) {
+                    var seconds = (diff / 1000).toFixed(0);
+                    var minutes = Math.floor(seconds / 60);
+                    seconds = Math.floor(seconds % 60);
+                    seconds = (seconds >= 10) ? seconds : "0" + seconds;
+                    var txt = minutes + ":" + seconds;
+                    $("#btnCountdown3").text(txt);
+                } else {
+                    clearInterval(Timer3);
+                    //let user know
+                    $("#btnCountdown3").html('<span class="k-icon k-i-clock"></span>');
+                    alert("Port 3 15 minute countdown complete.");
+                }
+            }
+
+            me.LoadPhoneCSV = function(){
+                $.ajax({
+                    type: 'GET',
+                    url: phonecsvfile,
+                    dataType: 'text',
+                }).done(function (response) {
+                    if (response && response.length > 0) {
+                        PHONES = $.csv.toObjects(response);
+                        console.log("PHONES: ", PHONES);
+                        var html = '';
+                        for (let index = 0; index < PHONES.length; index++) {
+                            const p = PHONES[index];
+                            html += '<tr>';
+                            html += '<td>' + p.DEPARTMENT + '</td><td>' + p.NAME + '</td><td>' + p.PHONE + '</td><td>' + p.REASON + '</td>';
+                            html += '</tr>';                            
+                        }
+                        $("#phoneBody").empty().append(html);
+                    }
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log("LoadPhoneCSV Fail:", jqXHR);
+                }).always(function () {
+
+                });
+            }
+
+            me.LoadCSV = function () {
+
+                $.ajax({
+                    type: 'GET',
+                    url: datacsvfile,
+                    dataType: 'text',
+                }).done(function (response) {
+
+                    if (response && response.length > 0) {
+                        BARs = $.csv.toObjects(response);
+
+                        //parse the slack channels:  Pilot_ahold^GKWPJV86Q|Pilot_ woodmans^GKQF35338|Pilot_woolworths^GKQF35338
+                        for (var i = 0; i < BARs.length; i++) {   
+                            var slacks = [];                         
+                            if (is.propertyDefined(BARs[i], 'SLACK') && BARs[i].SLACK){
+                                var res = BARs[i].SLACK.split("|");
+                                res.forEach(element => {
+                                    var s = element.split("^");
+                                    var sObj = {text: s[0], SlackURL: slackBaseUrl + s[1]};
+                                    slacks.push(sObj);
+                                });
+                            }
+                            BARs[i].SLACKS = slacks;
+                        }
+                        console.log('BARs:', BARs);
+                    }
+
+                    me.config.DD1Elem.kendoDropDownList({
+                        filter: "contains",
+                        dataTextField: "BAR",
+                        dataValueField: "DB",
+                        template: '#: BAR # : #: SCHEDULES #',
+                        autoWidth: true,
+                        dataSource: BARs,
+                        select: function (e) {
+                            var item = e.dataItem;
+                            CurDataItem1 = item;
+                            me.config.TopDetailsElem.data("kendoTooltip").refresh();
+                            me.config.F1Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                            $("#btnCancelCountdown1").trigger("click");
+                            UpdateSlackMenus();
+                            AddRecent(item,1);
+                        },
+                        dataBound: function (e) {
+                            if (BARs && BARs.length > 0) {
+                                //select first item
+                                e.sender.select(0);
+                                setTimeout(function () {
+                                    var item = BARs[0];
+                                    CurDataItem1 = item;
+                                    me.config.TopDetailsElem.data("kendoTooltip").refresh();
+                                    me.config.F1Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                                    UpdateSlackMenus();
+                                    AddRecent(item,1);
+                                }, 700);
+                            }
+                        }
+                    });
+                    me.config.DD2Elem.kendoDropDownList({
+                        filter: "contains",
+                        dataTextField: "BAR",
+                        dataValueField: "DB",
+                        dataSource: BARs,
+                        template: '#: BAR # : #: SCHEDULES #',
+                        autoWidth: true,
+                        select: function (e) {
+                            var item = e.dataItem;
+                            CurDataItem2 = item;
+                            me.config.MidDetailsElem.data("kendoTooltip").refresh();
+                            me.config.F2Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                            $("#btnCancelCountdown2").trigger("click");
+                            UpdateSlackMenus();
+                            AddRecent(item,2);
+                        },
+                        dataBound: function (e) {
+                            if (BARs && BARs.length > 1) {
+                                //select first item
+                                e.sender.select(1);
+                                setTimeout(function () {
+                                    var item = BARs[1];
+                                    CurDataItem2 = item;
+                                    me.config.MidDetailsElem.data("kendoTooltip").refresh();
+                                    me.config.F2Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                                    UpdateSlackMenus();
+                                    AddRecent(item,2);
+                                }, 700);
+                            }
+                        }
+
+                    });
+                    me.config.DD3Elem.kendoDropDownList({
+                        filter: "contains",
+                        dataTextField: "BAR",
+                        dataValueField: "DB",
+                        dataSource: BARs,
+                        template: '#: BAR # : #: SCHEDULES #',
+                        autoWidth: true,
+                        select: function (e) {
+                            var item = e.dataItem;
+                            CurDataItem3 = item;
+                            me.config.BotDetailsElem.data("kendoTooltip").refresh();
+                            me.config.F3Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                            $("#btnCancelCountdown3").trigger("click");
+                            UpdateSlackMenus();
+                            AddRecent(item,3);
+                        },
+                        dataBound: function (e) {
+                            if (BARs && BARs.length > 2) {
+                                //select first item
+                                e.sender.select(2);
+                                setTimeout(function () {
+                                    var item = BARs[2];
+                                    CurDataItem3 = item;
+                                    me.config.BotDetailsElem.data("kendoTooltip").refresh();
+                                    me.config.F3Elem[0].contentWindow.LoadBAR(item, CurLayout);
+                                    UpdateSlackMenus();
+                                    AddRecent(item,3);
+                                }, 700);
+                            }
+                        }
+                    });
+
+
+                    var lay = PersistFunctions.GetLayout();
+                    if (CurLayout != lay) {
+                        me.config.ToggleLayoutBtnElem.data("kendoButton").trigger("click");
+                    }
+
+                }).fail(function (jqXHR, textStatus, errorThrown) {
+                    console.log("LoadCSV Fail:", jqXHR);
+                }).always(function () {
+
+                    //tooltips
+                    var tooltip = $("[title]").kendoTooltip({
+                        position: "bottom",
+                        animation: {
+                            open: {
+                                effects: "zoom",
+                                duration: 150
+                            }
+                        }
+                    }).data("kendoTooltip");
+
+                    throttledResize();
+
+                });
+            };
+
+
+            var GetBotLocalTime = function (zone) {
+                var localTime = new Date().toLocaleString("en-US", { timeZone: zone, dateStyle: "short", timeStyle: "short" });
+                return localTime;
+            }
+
+            var AddRecent = function(SelBar, port){
+                //see if recent list already includes this one 
+                var NewList = recent.filter(e => e.BAR != SelBar.BAR);
+                NewList.unshift(SelBar);
+                if (NewList.length > 6) NewList.pop(); //remove oldest
+                recent = NewList;
+                PersistFunctions.SaveRecent(NewList); //save the list
+                //load the panel
+                LoadRecentMenu();
+            };
+
+            var GetNumPorts = function(){
+                var numvisible = 3;
+                if (me.config.F2Elem.hasClass("hidden")) {
+                    numvisible = 1;
+                } else if (me.config.F3Elem.hasClass("hidden")) {
+                    numvisible = 2;
+                }
+                return numvisible;
+            };
+
+            var LoadRecentMenu = function(){
+                me.config.RecentListElem.empty();
+
+                var html = '';
+                for (let i = 0; i < recent.length; i++) {
+                    html += '<button class="k-button RecentButton" data-role="button" type="button" data-bar="' + recent[i].BAR + '" >' + recent[i].BAR + '</button>'      
+                }
+                me.config.RecentListElem.append(html);
+            }
+
+            return me;
+        }();
+
+
+
+        $(function () {
+            //jQuery is ready
+            MainModule.init();
+            setTimeout(function () { $("#jsd-widget").toggle(800); }, 1000);
+        });
+
+        function MaximizePort(URL, title) {
+            MainModule.MaximizePort(URL, title);
+        };
+
+
+    </script>
+</body>
+</html >

@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Notes</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="cleartype" content="on" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v1.88" />
+
+
+    <link href="scripts/kendo/styles/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.mobile.min.css" rel="stylesheet" />
+    <link href="scripts/summernote/summernote-lite.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            overflow: hidden;
+            font-family: Arial,Verdana, sans-serif;
+            background-color: #fdfdfd;
+            color: #333;
+            background: #fdfdfd;
+            overflow: auto;
+        }
+
+        #notesTable {
+            width: 100%;
+            text-align: left;
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+            #notesTable td, #notesTable th {
+                vertical-align: top;
+                padding: 4px;
+                border: 1px solid rgba(0,0,0,0.1);
+            }
+            #notesTable th {
+                background: #efefef;
+                color: #333;
+            }
+
+
+        .p-top-8 {
+            padding-top: 8px;
+        }
+
+        .nowrap {
+            white-space: nowrap;
+        }
+
+        .NPInput {
+            border: 1px solid #ccc;
+            height: 28px;
+            padding: 5px 12px;
+        }
+
+        label {
+            font-weight:700;
+            font-size: 14px;
+        }
+        .SaveButton {
+            background-color: #3F51B5;
+        }
+
+        .note-editor.note-frame{
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 0;
+        }
+        .note-toolbar, .note-resizebar{
+            background: #efefef;
+        }
+        .note-icon-bar {
+            color: white;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 0;
+            margin-bottom: 0.1rem;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 0.1rem;
+        }
+
+
+        ol,
+        ul,
+        dl {
+          margin-top: 0;
+          margin-bottom: 0.1rem;
+        }
+
+        ol ol,
+        ul ul,
+        ol ul,
+        ul ol {
+          margin-bottom: 0;
+        }
+
+        dt {
+          font-weight: 700;
+        }
+
+        dd {
+          margin-bottom: .1rem;
+          margin-left: 0;
+        }
+
+        blockquote {
+          margin: 0 0 1rem;
+        }
+
+        b,
+        strong {
+          font-weight: bolder;
+        }
+
+        small {
+            font-size: 80%;
+        }
+
+        sub,
+        sup {
+            position: relative;
+            font-size: 75%;
+            line-height: 0;
+            vertical-align: baseline;
+        }
+
+        sub {
+          bottom: -.25em;
+        }
+
+        sup {
+          top: -.5em;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="">
+        <h4>Add Note</h4>
+        <div id="editor" class="notepadstyles" style="height:80px; "></div>
+    </div>
+
+    <div class="p-top-8">
+        <label>Author: </label>
+        <input id="txtAuthor" type="text" style="width: 240px;" class="NPInput" />
+        <button id="btnSave" type="button" class="k-button SaveButton" data-role="button" title="Save note">Save Note</button>
+    </div>
+
+    <hr style="opacity: 0.2" />
+    <div class="notepadstyles p-top-8">
+        <h4>Notes History</h4>
+        <table id="notesTable" class="">
+            <thead id="notesTableHeader">
+                <tr>
+                    <th>
+                        Timestamp
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th style="width: 95%;">
+                        Note
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="notesTableBody">
+                <tr>
+                    <td class="nowrap">
+                        2020-01-32 12:00:00
+                    </td>
+                    <td class="nowrap">
+                        Homer Simpson
+                    </td>
+                    <td>
+                        This is a real note
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scripts/jquery-3.4.1.min.js?v=1"></script>
+    <script src="scripts/kendo/js/kendo.ui.core.min.js?v=1"></script>
+    <script src="scripts/jQuery-csv.js?v=1"></script>
+    <script src="scripts/summernote/summernote-lite.js"></script>
+    <script src="scripts/moment.js"></script>
+    <script>
+
+        var savedAuthorKey = "SavedAuthorKey";
+        var SaveAuthor = function (author) {
+            if (author && author.trim().length > 0) {
+                localStorage.setItem(savedAuthorKey, author);
+            }
+        };
+        GetAuthor = function () {
+            var author = localStorage.getItem(savedAuthorKey);
+            return author && author.trim().length > 0 ? author : "";
+        };
+
+
+        var BAR = "BAR001";
+        var AUTH = GetAuthor();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('id');
+        if (myParam && myParam.length > 0) BAR = myParam;
+
+        const myAuth = urlParams.get('author');
+        if (myAuth && myAuth.length > 0) AUTH = myAuth;
+
+
+        $(function () {
+            
+            if (AUTH && AUTH.trim().length > 0) {
+                $("#txtAuthor").val(AUTH);
+            }
+
+            GetNotesForBAR();
+
+            $('#editor').summernote({
+                //placeholder: 'Note text...',
+                tabsize: 2,
+                focus: true,
+                //height: 80,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture', 'hr']],
+                    ['edit', ['undo', 'redo']],
+                    ['help', ['help']]
+                ]
+            });
+
+            $("#btnSave").on('click', function () {
+                var author = $("#txtAuthor").val();
+                author = author ? author.trim() : "";
+                if (author.length < 1) {
+                    kendo.alert("Please enter an author for the note first.");
+                    return;
+                }
+                SaveAuthor(author);
+
+                if ($('#editor').summernote('isEmpty')) {
+                    kendo.alert("Please enter note text first.");
+                    return;
+                }
+                var markupStr = $('#editor').summernote('code');
+                SaveNote(author, markupStr);
+
+                //clear editor for next note
+                $('#editor').summernote('reset');
+            });
+
+        });
+
+        var SaveNote = function (author, note) {
+            var ts = moment().format();
+
+            $.ajax({
+                url: "./api/notes/",
+                type: 'POST',
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({botid: BAR, author: author, note: note, notetime: ts}),
+            })
+            .done(function( response ) {
+                console.log("Save Note Response: ", response);
+                FillHistory(response.data);
+            });
+        };
+
+        var GetNotesForBAR = function () {
+
+            $.ajax({
+                url: "./api/notes/" + BAR,
+                type: 'GET',
+                contentType: "application/json",
+            })
+            .done(function( response ) {
+                console.log("Get Notes for BAR: ", response);
+                FillHistory(response.data);
+            });
+        }
+
+        var FillHistory = function (rows) {
+            var HTML = '';
+            var NumRows = 0;
+            for (var i = rows.length - 1; i >=0; i--) {
+                var r = rows[i];
+                HTML += '<tr>';
+                HTML += '<td class="nowrap">' + moment(r.notetime).format('YYYY-MM-DD hh:mm a') + '</td>';
+                HTML += '<td class="nowrap">' + r.author + '</td>';
+                HTML += '<td>' + r.note + '</td>';
+                HTML += '</tr>';
+                NumRows++;
+                if (NumRows > 50) break;
+            }
+            $("#notesTableBody").empty().append(HTML);
+        }
+
+
+    </script>
+</body>
+</html >

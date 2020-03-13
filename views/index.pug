@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title
+    style
+      include def.css
+  body
+    H1 Fleet Management Node.js App
+    hr
+    H3 Available Pages
+    hr
+    ul
+      li
+        a(href='./default.html') Multiview
+      li
+        a(href='./PilotPortal.html') Pilot Portal
+      li
+        a(href='./notepad.html?id=EZBAR101&author=Homer+Simpson') notepad with fake BAR for testing
+    hr
+    H3 API Tests
+    hr
+    ul 
+      li
+        a(href='./api/notes') Get all notes
+      li
+        a(href='./api/conc') Test concurrency cache api

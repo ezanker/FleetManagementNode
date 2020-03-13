@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>EZ Pilot Robot</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="cleartype" content="on" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v1.88" />
+
+
+    <link href="scripts/kendo/styles/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.mobile.min.css" rel="stylesheet" />
+
+    <style>
+        html, body {
+            overflow: hidden;
+            background: #303030;
+            font-family: Arial,Verdana, sans-serif;
+        }
+
+        #contentDiv {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0;
+        }
+
+        .ifr {
+            position: absolute;
+            top:0;bottom:0;left:0;right:0;
+            border: 0px solid #111;
+        }
+
+        .ReloadButton{
+            position: absolute;
+            left: 12px;
+            top: 1px;
+            background: rgba(192,192,192,1);
+            color: #303030;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
+            cursor:pointer;
+        }
+        .ReloadButton:hover{
+            background: rgba(228,228,228,1);
+            color: #3F51B5;
+        }
+
+        .MaxPort{
+            position: absolute;
+            left: 1px;
+            top: 1px;
+            background: rgba(192,192,192,1);
+            color: #303030;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
+            cursor:pointer;
+        }
+        .MaxPort:hover{
+            background: rgba(228,228,228,1);
+            color: #3F51B5;
+        }
+
+        #vertical {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0;
+        }
+
+        .pHoriz {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 49.8%
+        }
+        #Port1.pHoriz{
+            left: 0;
+        }
+        #Port2.pHoriz{
+            right: 0;
+        }
+
+        .pVert {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 49.8%
+        }
+        #Port1.pVert{
+            top: 0;
+        }
+        #Port2.pVert{
+            bottom: 0;
+        }
+
+        .RestrictionsOverlay{
+            position: absolute;
+            display: inline-block;
+            z-index: 1000;;
+            right: 0; top: 0;
+            background-color: red;
+            padding: 2px 2px;
+            color: #fff;
+            font-size: 10px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.19), 0 4px 4px rgba(0,0,0,0.23);
+            cursor:pointer;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="RestrictionsContainer" class="RestrictionsOverlay hidden">
+            SPECIFIC INSTRUCTIONS
+    </div>
+    <div style="display: none;">
+        <div id="dialog"><ul id="SpecialInstructions"></ul></div>
+    </div>
+
+    <div id="contentDiv" style="background: white;">
+
+
+        <div id="vertical" data-numports="2" style="height: 100%;">
+            <div id="Port1" class="pAll pHorizAA">
+                <iframe id="F1" src="about:blank" frameborder="0" class="k-content-frame ifr"></iframe>
+                <span class="MaxPort" data-portnum="F1"><span class="k-icon k-i-hyperlink-open-sm" style="font-size: 10px; "></span></span>
+
+            </div>
+            <div id="Port2" class="pAll pHorizAA">
+                <iframe id="F2" src="about:blank" frameborder="0" class="k-content-frame ifr"></iframe>
+                <span class="ReloadButton" data-portnum="F2"><span class="k-icon k-i-reload-sm" style="font-size: 10px; "></span></span>
+                <span class="MaxPort" data-portnum="F2"><span class="k-icon k-i-hyperlink-open-sm" style="font-size: 10px; "></span></span>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script id="PortTemplate" type="text/x-kendo-template">
+        <div id="vertical" data-numports="2" style="height: 100%;">
+            <div id="Port1" class="pAll pHorizAA">
+                <iframe id="F1" src="#= URL1 #" frameborder="0" class="k-content-frame ifr"></iframe>
+                <span class="MaxPort" data-portnum="F1"><span class="k-icon k-i-hyperlink-open-sm" style="font-size: 10px; "></span></span>
+
+            </div>
+            <div id="Port2" class="pAll pHorizAA">
+                <iframe id="F2" src="#= URL2 #" frameborder="0" class="k-content-frame ifr"></iframe>
+                <span class="ReloadButton" data-portnum="F2"><span class="k-icon k-i-reload-sm" style="font-size: 10px; "></span></span>
+                <span class="MaxPort" data-portnum="F2"><span class="k-icon k-i-hyperlink-open-sm" style="font-size: 10px; "></span></span>
+            </div>
+        </div>
+    </script>
+
+    <script src="scripts/jquery-3.4.1.min.js?v=1"></script>
+    <script src="scripts/kendo/js/kendo.ui.core.min.js?v=1"></script>
+    <script src="scripts/jQuery-csv.js?v=1"></script>
+
+    <script>
+        var curItem;
+
+
+        var SaveSizesFunctions = {
+            SaveSizeKey: "PortSizeKey",
+
+            SaveSizes: function (sizes, orient) {
+                localStorage.setItem(SaveSizesFunctions.SaveSizeKey + orient, sizes);
+            },
+            GetSaveSizes: function (orient) {
+                var sizes = localStorage.getItem(SaveSizesFunctions.SaveSizeKey + orient);
+                return sizes ? sizes : null;
+            },
+
+        };
+
+        function LoadBAR(item, passedorient) {
+            //console.log("LoadBAR item:", item.BAR);
+            curItem = item;
+
+            if (passedorient != "horizontal") {
+                //$("#Port1, #Port2").removeClass("pHoriz").addClass("pVert");
+                CreateSplitter("vertical");
+            } else {
+                //$("#Port1, #Port2").removeClass("pVert").addClass("pHoriz");
+                CreateSplitter("horizontal");
+            }
+
+            //$("#F1").prop("src", item.MAP_URL);
+            //$("#F2").prop("src", item.PIPELINE_URL);
+        };
+
+        var DestroySplitter = function (elem) {
+            if (elem.length) {
+                var splitter = elem.data("kendoSplitter");
+                if (splitter) {
+                    splitter.destroy();
+                }
+            }
+        };
+
+        var CreateSplitter = function (orient) {
+            DestroySplitter($("#vertical"));
+            var template = kendo.template($("#PortTemplate").html());
+            var result = template({ URL1: curItem.MAP_URL, URL2: curItem.PIPELINE_URL}); //Execute the template
+
+            $("#vertical").replaceWith(result);
+            var s = SaveSizesFunctions.GetSaveSizes(orient) || "50%";
+            s = "50%";
+
+            $("#vertical").kendoSplitter({
+                orientation: orient,
+                panes: [
+                    { collapsible: true, scrollable: false, size: s },
+                    { collapsible: true, scrollable: false },
+                ],
+                resize: function (e) {
+                    SaveSplitterSizes(orient);
+                }
+            });
+
+            if (curItem && curItem.RESTRICTIONS) {
+                $("#RestrictionsContainer").removeClass("hidden");
+            } else {
+                $("#RestrictionsContainer").addClass("hidden");
+            }
+        }
+
+        var SaveSplitterSizes = function (orient) {
+            var size = 100;
+            var size2 = 100;
+            if (orient == "horizontal") {
+                size =  $("#Port1").width();
+                size2 = $("#Port2").width();
+            var total = 0;
+            } else {
+                size =  $("#Port1").height();
+                size2 = $("#Port2").height();
+            }
+            var total = size + size2;
+            var percent = 50;
+            if (total > 0) percent = Math.floor(size * 100 / total);
+
+            SaveSizesFunctions.SaveSizes(percent + "%", orient);
+        }
+
+        $(function () {
+            //jQuery is ready
+            $('#dialog').kendoWindow({
+                modal: true,
+                title: "Specific Instructions",
+                resizable: false,
+                visible: false,
+                actions: [
+                    "Close"
+                ],
+                maxWidth: "98%",
+                maxHeight: '94vh',
+                animation: {
+                    open: { effects: "zoomIn slideIn:left", duration: 400 },
+                    close: { effects: "zoomIn slideIn:right", duration: 300, reverse: true }
+                },
+            })
+
+            $("#contentDiv").on("click", ".ReloadButton", function () {
+                var port = $(this).data("portnum");
+                $("#" + port).prop("src", $("#" + port).prop("src"));
+            });
+
+
+            $("#contentDiv").on("click", ".MaxPort", function () {
+                var port = $(this).data("portnum");
+                var URL = $("#" + port).prop("src");
+                window.parent.MaximizePort(URL, "");
+            });
+
+            $(document).on("click", ".RestrictionsOverlay", function () {
+                if (curItem && curItem.RESTRICTIONS) {
+                    var arr = curItem.RESTRICTIONS.split("|");
+                    var html = '';
+                    for (let index = 0; index < arr.length; index++) {
+                        html += '<li>' + arr[index] + '</li>';
+                    }
+                    $("#SpecialInstructions").empty().append(html);
+                    var kendoWindow = $('#dialog').data("kendoWindow");
+                    kendoWindow.center().open();  
+                }
+            });
+
+            $(document).on('click', function(event){
+                    $target = $(event.target);
+
+                    if($target.hasClass('k-overlay')) {
+                        $('#dialog').data("kendoWindow").close();
+                    }          
+                });
+
+        });
+
+
+
+
+    </script>
+</body>
+</html>

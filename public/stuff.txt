@@ -1,0 +1,5 @@
+﻿ID : jeffnorth@badger-technologies.com
+pass: homer123
+
+TimeZones, use link in notes column
+https://en.wikipedia.org/wiki/List_of_tz_database_time_zones

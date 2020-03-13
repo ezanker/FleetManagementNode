@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>EZ Test Page</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui" />
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="MobileOptimized" content="320" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta http-equiv="cleartype" content="on" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0" />
+    <link rel="icon" href="PilotFav.ico?v1.03" />
+
+
+    <link href="scripts/kendo/styles/kendo.common-material.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.min.css" rel="stylesheet" />
+    <link href="scripts/kendo/styles/kendo.materialblack.mobile.min.css" rel="stylesheet" />
+
+
+    <style>
+        .JiraTicket {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            width: 300px;
+            height: 800px;
+            overflow:auto;
+            border: 1px solid #333;
+        }
+
+    </style>
+</head>
+<body>
+    <script data-jsd-embedded data-key="5641d795-dc64-45d0-a31e-7ebb24d3ade7" data-base-url="https://jsd-widget.atlassian.com" src="https://jsd-widget.atlassian.com/assets/embed.js"></script>
+
+<button id="btnJira">
+    Toggle Jira
+</button>
+
+
+    <script src="scripts/jquery-3.4.1.min.js?v=1"></script>
+    <script src="scripts/kendo/js/kendo.ui.core.min.js?v=1"></script>
+    <script src="scripts/jQuery-csv.js?v=1"></script>
+
+    <script>
+
+        $("#btnJira").on('click', function () {
+            $("#jsd-widget").toggle(800);
+
+        });
+
+
+    </script>
+
+</body>
+</html>
