@@ -217,7 +217,21 @@
             padding: 0px 6px;
             border-radius: 4px;
             background: red;
+            
         }
+
+        .badge {
+            position: relative;
+            background-color: #34BEDA;
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+            border-radius: 33%;
+            padding: 2px 5px;
+            z-index: 10000;
+            box-shadow: 0 6px 6px rgba(0,0,0,0.23);
+        }
+
 
     </style>
 
@@ -226,7 +240,8 @@
 <body>
     <div id="contentDiv">
         <div id="ButtonRow">
-            <span id="ReservedImg" class="k-icon k-i-user reservedImg hidden" ></span>
+            <span id="ReservedImg" class="k-icon k-i-user reservedImg hidden"></span>
+            <span id="NotesBadge" class="badge hidden" title="new notes">1</span>
             <label class="hidden">
                 DB:
                 <input id="txtNum" type="number" title="Enter desired DB number and click GO" value="1" min="0" max="999999999" style="width: 100px;" />
@@ -247,7 +262,7 @@
 
             <span class="padLeft lbl">Popups:</span>
             <span id="popupsCont">
-                <button id="btnUser" type="button" class="k-button PortLabelButton " data-role="button"  >
+                <button id="btnUser" type="button" class="k-button PortLabelButton " data-role="button">
                     <span class="k-icon k-i-login" style="font-size: 22px;"></span>
                 </button>
                 <button id="btnVerif" type="button" class="k-button PUButton" data-role="button" title="Popup verification">V</button>
@@ -282,7 +297,7 @@
                 </button>
                 <button id="btnNotes" type="button" class="k-button PortLabelButton" data-role="button" title="Skybox Notepad Service Log">
                     <span class="k-icon k-i-track-changes-enable" style="font-size: 22px; "></span>
-                </button>
+                </button>                
                 <button id="btnKB" type="button" class="k-button PortLabelButton" data-role="button" title="Knowledge Base">
                     <span class="k-icon k-i-information" style="font-size: 22px; "></span>
                 </button>
@@ -722,6 +737,7 @@
                 NewTabBtnElem: $("#btnNewTab"),
                 ConfigBtnElem: $("#btnConfig"),
                 NotesButtonElem: $('#btnNotes'),
+                NotesButtonBadgeElem: $("#NotesBadge"),
                 KBButtonElem: $("#btnKB"),
                 JiraBtnElem: $("#btnJira"),
                 OptPort5Elem: $("#Port5"),
@@ -955,6 +971,12 @@
                     var s = GetSplitterSizes();
                     splitter.size(".k-pane:first", s.top);
                 }
+
+                //place notes badge
+                var notesLeft = me.config.NotesButtonElem.offset().left + 14;
+                var notesTop = me.config.NotesButtonElem.offset().top - 24;
+                me.config.NotesButtonBadgeElem.css("left", notesLeft + "px").css("top", notesTop + "px")
+
             }, 100);
 
             var CalcGridHeight = function () {
