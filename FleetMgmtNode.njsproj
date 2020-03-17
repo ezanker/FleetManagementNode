@@ -50,6 +50,9 @@
     <Content Include="public\default.html" />
     <Content Include="public\favicon.ico" />
     <Content Include="public\images\jira.svg" />
+    <Content Include="public\images\jiraWidget.svg" />
+    <Content Include="public\images\old.svg" />
+    <Content Include="public\images\phone.svg" />
     <Content Include="public\images\PortConfig_1Port.svg" />
     <Content Include="public\images\PortConfig_2Ports.svg" />
     <Content Include="public\images\PortConfig_3Ports.svg" />

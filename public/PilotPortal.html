@@ -264,10 +264,21 @@
             </span>
 
             <span id="popupsCont" class="padLeftBig">
-                <button id="btnDevops" type="button" class="k-button PUButton" data-role="button" title="Popup Devops">D</button>
-                <button id="btnJira" type="button" class="k-button PUButton" data-role="button" title="Toggle visibility of the Jira ticket widget">J</button>
-                <button id="btnBackup" type="button" class="k-button PUButton" data-role="button" title="Popup backup UI">B</button>
-                <button id="btnPhone" type="button" class="k-button PUButton" data-role="button" title="Phone numbers">P</span></button>
+                <button id="btnUser" type="button" class="k-button PortLabelButton " data-role="button">
+                    <span class="k-icon k-i-login" style="font-size: 22px;"></span>
+                </button>
+                <button id="btnDevops" type="button" class="k-button PUButton" data-role="button" title="Popup Jira" style="padding: 10px 4px;">
+                    <img src="images/jira.svg" style="width: 18px; height: 18px;" />
+                </button>
+                <button id="btnBackup" type="button" class="k-button PUButton" data-role="button" title="Popup backup UI" style="padding: 10px 4px;">
+                    <img src="images/old.svg" style="width: 18px; height: 18px;" />
+                </button>
+                <button id="btnPhone" type="button" class="k-button PUButton" data-role="button" title="Phone numbers" style="padding: 10px 4px;">
+                    <img src="images/phone.svg" style="width: 18px; height: 18px;" />
+                </button>
+                <button id="btnJira" type="button" class="k-button PUButton" data-role="button" title="Toggle visibility of the Jira ticket widget" style="padding: 10px 4px;">
+                    <img src="images/jiraWidget.svg" style="width: 18px; height: 18px;" />
+                </button>
             </span>
 
             <label class="padLeft">
@@ -336,6 +347,10 @@
                         <td>#= BAR #</td>
                     </tr>
                     <tr>
+                        <td>TYPE:</td>
+                        <td>#= BOTTYPE #</td>
+                    </tr>
+                    <tr>
                         <td>Store ID:</td>
                         <td>#= STORE_SITE_ID #</td>
                     </tr>
@@ -354,7 +369,7 @@
                     <tr>
                         <td>Local Time:</td>
                         <td>#= LOCAL #</td>
-                    </tr>                    
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -371,6 +386,7 @@
             SaveNumPortsKey: "NumPortsKey",
             SaveLayoutOrientKey: "LayoutOrientation",
             SaveRecentKey: "RecentPilotBARKey",
+            SaveUserNameKey: "UserName2Key",
 
             SaveNumPorts: function (NumPorts) {
                 localStorage.setItem(PersistFunctions.SaveNumPortsKey, NumPorts);
@@ -394,8 +410,18 @@
                 var recent = localStorage.getItem(PersistFunctions.SaveRecentKey);
                 return recent ? JSON.parse(recent) : [];
             },
+            SaveUserName: function (user) {
+                localStorage.setItem(PersistFunctions.SaveUserNameKey, user);
+            },
+            GetUserName: function () {
+                var user = localStorage.getItem(PersistFunctions.SaveUserNameKey);
+                return user && user !=undefined ? user : "";
+            },
 
         };
+
+
+        var sessionID = "DefaultUser";
 
         var MainModule = function () {
             var me = {};
@@ -461,10 +487,29 @@
                 NotePadFrame2Elem: $("#NotePadFrame2"),
                 NotePadFrame3Elem: $("#NotePadFrame3"),
                 PhoneBtnElem: $("#btnPhone"),
+                UserBtnElem: $("#btnUser"),
             };
 
             me.init = function (settings) {
                 $.extend(me.config, settings);
+
+                me.config.UserBtnElem.kendoTooltip({
+                    content: function(e) {
+                        var t = "Currnet user: " + sessionID;
+                        return t;
+                    }
+                });
+
+                //Current User Name
+                var uname = PersistFunctions.GetUserName();
+                console.log("user name: ", uname);
+                if (uname && uname.trim().length > 0) {
+                    sessionID = uname;
+                    me.config.UserBtnElem.data("kendoTooltip").refresh();
+                } else {
+                    //Get and store a user name
+                    me.GetUserName();
+                }
 
                 recent = PersistFunctions.GetRecent();
                 if (!recent) recent = [];
@@ -673,6 +718,10 @@
                     throttledResize();
                 });
 
+                me.config.UserBtnElem.on("click", function () {
+                    me.GetUserName();
+                });
+
                 me.config.ContentDivElem.on('click', '.cdbutton', function () {
                     var ID = $(this).prop("id");
                     var now = Date.now();
@@ -711,8 +760,8 @@
                 });
 
                 me.config.DevopsPopupBtnElem.on("click", function () {
-                    var URL = "https://dev.azure.com/jblprd/Badger/";
-                    var Title = "Devops";
+                    var URL = "https://badgertech.atlassian.net/jira/servicedesk/projects/FIT/queues/custom/14";
+                    var Title = "Jira";
                     window.open(URL, "_blank", "height=600,width=800,toolbar=yes,scrollbars=yes,resizable=yes");
                     return false;
                 });
@@ -874,14 +923,41 @@
                 });
             };
 
+            me.CreateBotID = function(db){
+                var botid = "DB" + db;
+                //if (IsWalmart) {
+                //    botid += "Walmart";
+                //}
+                return botid;
+            };
+
+
             me.GetNotepadURL = function (BAR) {
-                var NotePadURL = "http://10.210.232.187:3000?DB=" + BAR.DB;
-                if (is.propertyDefined(BAR, 'NOTEPADURL') && BAR.NOTEPADURL) {
-                    NotePadURL = BAR.NOTEPADURL;
-                }
+                //var NotePadURL = "http://10.210.232.187:3000?DB=" + BAR.DB;
+                //if (is.propertyDefined(BAR, 'NOTEPADURL') && BAR.NOTEPADURL) {
+                //    NotePadURL = BAR.NOTEPADURL;
+                //}
+
+                var NotePadURL = "notepad.html?id=" + me.CreateBotID(BAR.DB) + "&author=" + sessionID;
                 console.log("Notepad URL: ", NotePadURL);
                 return NotePadURL;
-            };            
+            };  
+
+            me.GetUserName = function () {
+                kendo.prompt("Please enter your name (used for Notes Author):", "").then(function (data) {
+                    if (data && data.trim().length > 0) {
+                        sessionID = data;
+                        PersistFunctions.SaveUserName(sessionID);
+                        console.log("User name: ", sessionID);
+                        me.config.UserBtnElem.data("kendoTooltip").refresh();
+                    } else {
+                        kendo.alert(kendo.format("You chose not to enter a name, so we will use: '{0}'", sessionID));
+                    }
+                }, function () {
+                    kendo.alert(kendo.format("You chose not to enter a name, so we will use: '{0}'", sessionID));
+                });
+            }
+
 
             var OpenSlack = function(URL){
                 window.open(URL, "_blank", "height=600,width=800,toolbar=yes,scrollbars=yes,resizable=yes");
