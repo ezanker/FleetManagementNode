@@ -221,7 +221,7 @@
         }
 
         .badge {
-            position: relative;
+            position: absolute;
             background-color: #34BEDA;
             color: white;
             font-weight: bold;
@@ -230,6 +230,7 @@
             padding: 2px 5px;
             z-index: 10000;
             box-shadow: 0 6px 6px rgba(0,0,0,0.23);
+            cursor: pointer;
         }
 
 
@@ -566,6 +567,7 @@
         //each time the page loads, generate a 
         //unique session ID used to  reserve BARs
         var sessionID = generateUUID();
+        var LastNoteCheck = new Date().getTime();
 
         var PageTitles = {};
         PageTitles["position"] = "BARViz";
@@ -708,7 +710,7 @@
             me.SkyboxListURL = "https://fleet-admin.badger-technologies.com/skybox";
 
             var ReserveTimer = null;
-            var NotesCount = 0;
+            var NotesTimer = null;
             var ConcurrentUser = "";
 
             me.config = {
@@ -910,6 +912,13 @@
                         var url = NotePadURL;
                         me.config.NotePadFrameElem.prop("src", url).slideDown(600);
                     }
+
+                    LastNoteCheck = new Date().getTime();
+                    me.config.NotesButtonBadgeElem.addClass("hidden").text("0");
+                });
+                me.config.NotesButtonBadgeElem.on("click", function () {
+                    LastNoteCheck = new Date().getTime();
+                    me.config.NotesButtonBadgeElem.addClass("hidden").text("0");
                 });
 
                 $(".portsel").on("click", function (e) {
@@ -973,8 +982,8 @@
                 }
 
                 //place notes badge
-                var notesLeft = me.config.NotesButtonElem.offset().left + 14;
-                var notesTop = me.config.NotesButtonElem.offset().top - 24;
+                var notesLeft = me.config.NotesButtonElem.offset().left + me.config.NotesButtonElem.width();
+                var notesTop = 0;
                 me.config.NotesButtonBadgeElem.css("left", notesLeft + "px").css("top", notesTop + "px")
 
             }, 100);
@@ -1233,14 +1242,17 @@
 
                 if (BAR) {
                     if (currentBar == BAR) return;
+                    currentBar = BAR;
 
                     clearInterval(ReserveTimer);
+                    clearInterval(NotesTimer);
 
                     me.GetNotepadURL(BAR);
-
-                    currentBar = BAR;
+                    
                     me.ReserveBAR();
                     ReserveTimer = setInterval(me.ReserveBAR, 8000);
+                    LastNoteCheck = new Date().getTime();
+                    NotesTimer = setInterval(me.NewNotesCheck, 20000);
 
                     document.title = BARNAME + " EZMV";
                     me.ReloadCurrent();
@@ -1573,19 +1585,6 @@
                 });
             };
 
-            me.GetNotesCount = function () {
-                var botid = me.CreateBotID();
-                $.ajax({
-                    url: "./api/notes/" + botid,
-                    type: 'GET',
-                    contentType: "application/json",
-                })
-                .done(function( response ) {
-                    console.log("Get Notes for BAR: ", response);
-                    NotesCount = response.count;
-                });
-            };
-
             me.NewNotesCheck = function () {
                 var botid = me.CreateBotID();
                 $.ajax({
@@ -1594,10 +1593,25 @@
                     contentType: "application/json",
                 })
                 .done(function( response ) {
-                    console.log("NewNotesCheck: ", response.count);
-                    if (response.count > NotesCount) {
-                        console.log("new notes");
+                    console.log("NewNotesCheck: ", response);
+                    var count = 0;
+                    for (var i = 0; i < response.data.length; i++) {
+                        var ts = new Date(response.data[i].notetime).getTime();
+                        var auth = response.data[i].author;
+                        if (ts > LastNoteCheck && auth != sessionID) {
+                            count++;
+                        }
                     }
+                    if (count > 0) {
+                        //place notes badge
+                        var notesLeft = me.config.NotesButtonElem.offset().left + me.config.NotesButtonElem.width();
+                        var notesTop = 0;
+                        me.config.NotesButtonBadgeElem.css("left", notesLeft + "px").css("top", notesTop + "px")
+                        me.config.NotesButtonBadgeElem.removeClass("hidden").text(count);
+                    } else {
+                        me.config.NotesButtonBadgeElem.addClass("hidden").text("0");
+                    }
+
                 });
             }
 

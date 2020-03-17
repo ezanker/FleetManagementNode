@@ -21,7 +21,6 @@ router.get('/', function (req, res) {
 
 // try to reserve a bot
 router.post('/', function (req, res) {
-    console.log(req);
     var key = req.body.botid;
     var val = req.body.author;
     console.log(key, val);

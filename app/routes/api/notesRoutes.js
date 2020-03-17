@@ -8,7 +8,7 @@ var db = require("../../../database.js");
  * Notes Entity routes
  */
 
- //get all notes
+//get all notes
 router.get('/', function (req, res) {
     var sql = "select * from notes";
     var params = [];
@@ -26,6 +26,7 @@ router.get('/', function (req, res) {
 
 //get all notes for specific BAR
 router.get('/:id', function (req, res) {
+    console.log("BOTID: ", req.params.id);
     var sql = "select * from notes where botid = ?";
     var params = [req.params.id];
     db.all(sql, params, (err, rows) => {
@@ -42,17 +43,8 @@ router.get('/:id', function (req, res) {
 });
 
 
-
-//in case we allow changing existing notes
-router.put('/:id', function (req, res) {
-    res.json({
-        message: "passed note updated not yet implemented"
-    });
-});
-
 //create a new note
 router.post('/', function (req, res) {
-    console.log(req);
     var sql = 'INSERT INTO notes (botid, author, note, notetime) VALUES (?,?,?,?)';
     var params = [req.body.botid, req.body.author, req.body.note, req.body.notetime ];
     console.log(params);
@@ -83,7 +75,14 @@ router.post('/', function (req, res) {
 //in case we allow deleting a note
 router.delete('/:id', function (req, res) {
     res.json({
-        message: "Passed note deleted"
+        message: "Passed note deleted (not implemented)"
+    });
+});
+
+//in case we allow changing existing notes
+router.put('/:id', function (req, res) {
+    res.json({
+        message: "passed note updated (not implemented)"
     });
 });
 
