@@ -51,6 +51,7 @@
     <Content Include="public\favicon.ico" />
     <Content Include="public\images\jira.svg" />
     <Content Include="public\images\jiraWidget.svg" />
+    <Content Include="public\images\Notepad.svg" />
     <Content Include="public\images\old.svg" />
     <Content Include="public\images\phone.svg" />
     <Content Include="public\images\PortConfig_1Port.svg" />
@@ -59,6 +60,7 @@
     <Content Include="public\images\PortConfig_4Ports.svg" />
     <Content Include="public\images\PortConfig_5Ports.svg" />
     <Content Include="public\images\quickbase.svg" />
+    <Content Include="public\images\slack.svg" />
     <Content Include="public\images\walmart.png" />
     <Content Include="public\notepad.html">
       <SubType>Code</SubType>
