@@ -233,6 +233,32 @@
             cursor: pointer;
         }
 
+        .marty {
+            position: absolute; 
+            background: rgba(0,0,0,0.75); 
+            top:0;bottom:0;left:0;right:0;
+            z-index:200000;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.65);
+        }
+        .martyCenter {
+            position: absolute; 
+            display: inline-block;
+            padding: 2em;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .martyRed {
+            color: red;
+        }
+        .martyWhite {
+            color: White;
+        }
+
+
 
     </style>
 
@@ -271,7 +297,7 @@
                     <img src="images/jira.svg" style="width: 18px; height: 18px;" />
                 </button>
                 <button id="btnQuickbase" type="button" class="k-button PUButton" data-role="button" title="Popup quickbase" style="padding: 10px 2px;">
-                    <img src="images/quickbase.svg" style="height: 18px;" />
+                    <img src="images/quickbase.svg" style=" height: 18px;" />
                 </button>
                 <button id="btnWalmart" type="button" class="k-button PUButton" data-role="button" title="Popup Walmart Skybox">W</button>
                 <button id="btnConsole" type="button" class="k-button PUButton" data-role="button" title="Popup Web Shell Linux Console">C</button>
@@ -298,7 +324,7 @@
                 </button>
                 <button id="btnNotes" type="button" class="k-button PortLabelButton" data-role="button" title="Skybox Notepad Service Log" style="padding: 10px 4px;">
                     <img src="images/Notepad.svg" style="width: 18px; height: 18px; opacity: 0.75;" />
-                </button>                
+                </button>
                 <button id="btnKB" type="button" class="k-button PortLabelButton" data-role="button" title="Knowledge Base">
                     <span class="k-icon k-i-information" style="font-size: 22px; "></span>
                 </button>
@@ -334,7 +360,7 @@
 
     </div>
 
-    <iframe id="NotePadFrame" src="about:blank" ></iframe>
+    <iframe id="NotePadFrame" src="about:blank"></iframe>
     <!-- popup window container -->
     <div style="display: none;">
         <div id="winPU"></div>
@@ -408,6 +434,17 @@
                 <button id="btnSaveConfig" type="button" class="k-button k-primary" data-role="button" title="Save selected port configuration">Save</button>
                 <button id="btnCancelConfig" type="button" class="k-button " data-role="button" title="">Cancel</button>
             </div>
+        </div>
+
+
+
+    </div>
+
+    <div id="martyPopup" class="marty hidden" >
+        <div class="martyCenter">
+            <img src="images/Notify_Marty.png" style="height: 45vh; " />
+            <div class="martyRed"><span id="martyName"></span> is currently working on this Robot!</div>
+            <div class="martyWhite">Please notify agent if you need this Robot</div>
         </div>
     </div>
 
@@ -549,22 +586,22 @@
         //Generates a Guid
         function generateUUID() {
             var d = new Date().getTime();
-            var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var d2 = (performance && performance.now && (performance.now() * 1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+            var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                 var r = Math.random() * 16;
-                if(d > 0){
-                    var r = (d + r)%16 | 0;
-                    d = Math.floor(d/16);
+                if (d > 0) {
+                    var r = (d + r) % 16 | 0;
+                    d = Math.floor(d / 16);
                 } else {
-                    var r = (d2 + r)%16 | 0;
-                    d2 = Math.floor(d2/16);
+                    var r = (d2 + r) % 16 | 0;
+                    d2 = Math.floor(d2 / 16);
                 }
-                return (c=='x' ? r : (r&0x7|0x8)).toString(16);
+                return (c == 'x' ? r : (r & 0x7 | 0x8)).toString(16);
             });
             return uuid;
         };
 
-        //each time the page loads, generate a 
+        //each time the page loads, generate a
         //unique session ID used to  reserve BARs
         var sessionID = generateUUID();
         var LastNoteCheck = new Date().getTime();
@@ -757,19 +794,21 @@
                 BtnCancelPortElem: $("#btnCancelConfig"),
                 NotePadFrameElem: $("#NotePadFrame"),
                 UserBtnElem: $("#btnUser"),
+                MartyPopupElem: $("#martyPopup"),
+                MartyNameElem: $("#martyName"),
             };
 
             me.init = function (settings) {
                 $.extend(me.config, settings);
 
                 me.config.UserBtnElem.kendoTooltip({
-                    content: function(e) {
+                    content: function (e) {
                         var t = "Currnet user: " + sessionID;
                         return t;
                     }
                 });
                 $("#ReservedImg").kendoTooltip({
-                    content: function(e) {
+                    content: function (e) {
                         var t = "<span style='color: #FF8080'>Another user is already looking at this BAR: <strong >" + ConcurrentUser + "</strong></span>";
                         return t;
                     }
@@ -797,6 +836,10 @@
             var bindUIActions = function () {
                 $(window).on("resize orientationchange", function () {
                     throttledResize();
+                });
+
+                me.config.MartyPopupElem.on("click", function (e) {
+                    me.DismissMarty();
                 });
 
                 me.config.recentLblElem.on("click", function () {
@@ -1248,8 +1291,9 @@
                     clearInterval(NotesTimer);
 
                     me.config.NotesButtonBadgeElem.addClass("hidden").text("0");
+                    me.config.MartyPopupElem.data("botid", "");
                     me.GetNotepadURL(BAR);
-                    
+
                     me.ReserveBAR();
                     ReserveTimer = setInterval(me.ReserveBAR, 8000);
                     LastNoteCheck = new Date().getTime();
@@ -1298,11 +1342,11 @@
                     if (me.ReloadSkybox(me.PortConfiguration.P5Page, $("#F5"))) $("#F5").prop("src", me.GetURL(me.PortConfiguration.P5Page));
                 }
             };
-            me.ReloadSkybox = function(page, frame) {
+            me.ReloadSkybox = function (page, frame) {
                 var ret = true;
-                if (page == "skybox-bot-list"){
+                if (page == "skybox-bot-list") {
                     var framurl = frame.prop("src");
-                    if (framurl == me.SkyboxListURL){
+                    if (framurl == me.SkyboxListURL) {
                         ret = false;
                     }
                 }
@@ -1558,7 +1602,7 @@
 
             };
 
-            me.CreateBotID = function(){
+            me.CreateBotID = function () {
                 var botid = "DB" + currentBar;
                 if (IsWalmart) {
                     botid += "Walmart";
@@ -1566,24 +1610,39 @@
                 return botid;
             };
 
-            me.ReserveBAR = function() {
+            me.DismissMarty = function () {
+                me.config.MartyPopupElem.addClass("hidden");
+            };
+            me.ShowMarty = function (botid) {
+                var b = me.config.MartyPopupElem.data("botid");
+                if (b && b == botid) {
+                    return;
+                }
+                me.config.MartyPopupElem.data("botid", botid);
+                me.config.MartyNameElem.text(ConcurrentUser);
+                me.config.MartyPopupElem.removeClass("hidden");
+            };
+
+            me.ReserveBAR = function () {
                 var botid = me.CreateBotID();
                 $.ajax({
                     url: "./api/conc/",
                     type: 'POST',
                     dataType: "json",
                     contentType: "application/json",
-                    data: JSON.stringify({botid: botid, author: sessionID}),
+                    data: JSON.stringify({ botid: botid, author: sessionID }),
                 })
-                .done(function (response) {
-                    if (response.haveControl) {
-                        $("#ReservedImg").addClass("hidden");
-                    } else {
-                        $("#ReservedImg").removeClass("hidden");
-                        ConcurrentUser = response.currentController;
-                        $("#ReservedImg").data("kendoTooltip").refresh();
-                    }
-                });
+                    .done(function (response) {
+                        if (response.haveControl) {
+                            $("#ReservedImg").addClass("hidden");
+                            me.DismissMarty();
+                        } else {
+                            $("#ReservedImg").removeClass("hidden");
+                            ConcurrentUser = response.currentController;
+                            $("#ReservedImg").data("kendoTooltip").refresh();                            
+                            me.ShowMarty(botid);
+                        }
+                    });
             };
 
             me.NewNotesCheck = function () {
@@ -1593,27 +1652,27 @@
                     type: 'GET',
                     contentType: "application/json",
                 })
-                .done(function( response ) {
-                    console.log("NewNotesCheck: ", response);
-                    var count = 0;
-                    for (var i = 0; i < response.data.length; i++) {
-                        var ts = new Date(response.data[i].notetime).getTime();
-                        var auth = response.data[i].author;
-                        if (ts > LastNoteCheck && auth != sessionID) {
-                            count++;
+                    .done(function (response) {
+                        console.log("NewNotesCheck: ", response);
+                        var count = 0;
+                        for (var i = 0; i < response.data.length; i++) {
+                            var ts = new Date(response.data[i].notetime).getTime();
+                            var auth = response.data[i].author;
+                            if (ts > LastNoteCheck && auth != sessionID) {
+                                count++;
+                            }
                         }
-                    }
-                    if (count > 0) {
-                        //place notes badge
-                        var notesLeft = me.config.NotesButtonElem.offset().left + me.config.NotesButtonElem.width();
-                        var notesTop = 0;
-                        me.config.NotesButtonBadgeElem.css("left", notesLeft + "px").css("top", notesTop + "px")
-                        me.config.NotesButtonBadgeElem.removeClass("hidden").text(count);
-                    } else {
-                        me.config.NotesButtonBadgeElem.addClass("hidden").text("0");
-                    }
+                        if (count > 0) {
+                            //place notes badge
+                            var notesLeft = me.config.NotesButtonElem.offset().left + me.config.NotesButtonElem.width();
+                            var notesTop = 0;
+                            me.config.NotesButtonBadgeElem.css("left", notesLeft + "px").css("top", notesTop + "px")
+                            me.config.NotesButtonBadgeElem.removeClass("hidden").text(count);
+                        } else {
+                            me.config.NotesButtonBadgeElem.addClass("hidden").text("0");
+                        }
 
-                });
+                    });
             }
 
             me.GetUserName = function () {

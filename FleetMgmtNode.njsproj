@@ -52,6 +52,7 @@
     <Content Include="public\images\jira.svg" />
     <Content Include="public\images\jiraWidget.svg" />
     <Content Include="public\images\Notepad.svg" />
+    <Content Include="public\images\Notify_Marty.png" />
     <Content Include="public\images\old.svg" />
     <Content Include="public\images\phone.svg" />
     <Content Include="public\images\PortConfig_1Port.svg" />
