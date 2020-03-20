@@ -742,8 +742,8 @@
             var IsWalmart = false;
             var BARs = [];
             var STOREs = [];
-            var NotePadURL = "http://10.210.232.187:3000";
-            me.KBURL = "http://10.210.233.122:220/index.php";
+            var NotePadURL = "notepad.html";
+            me.KBURL = "http://10.210.237.176:220/";
             me.SkyboxListURL = "https://fleet-admin.badger-technologies.com/skybox";
 
             var ReserveTimer = null;
@@ -858,16 +858,13 @@
                     var URL = "https://toshibagcs.quickbase.com";
                     var Title = "Quickbase";
                     //me.PopupUrl(URL, Title);
-                    window.open(URL, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+                    window.open(URL, "_blank", "height=400,width=600,toolbar=yes,scrollbars=yes,resizable=yes");
                     return false;
                 });
                 me.config.DevopsPopupBtnElem.on("click", function () {
-                    //var URL = "https://dev.azure.com/jblprd/Badger/";
-                    //switch devops to Jira
                     var URL = "https://badgertech.atlassian.net/jira/servicedesk/projects/FIT/queues/custom/14";
                     var Title = "Jira";
-                    //me.PopupUrl(URL, Title);
-                    window.open(URL, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+                    window.open(URL, "_blank", "height=400,width=600,toolbar=yes,scrollbars=yes,resizable=yes");
                     return false;
                 });
                 me.config.WalmartPopupBtnElem.on("click", function () {
@@ -878,10 +875,9 @@
                     return false;
                 });
                 me.config.ConsolePopupBtnElem.on("click", function () {
-                    var URL = "https://10.210.232.187:4200/";
+                    var URL = "https://10.210.237.174:5200/";
                     var Title = "Web Shell Linux Console";
-                    //me.PopupUrl(URL, Title);
-                    window.open(URL, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+                    window.open(URL, "_blank", "height=400,width=600,toolbar=yes,scrollbars=yes,resizable=yes");
                     return false;
                 });
 
@@ -893,10 +889,8 @@
                 });
 
                 me.config.KBButtonElem.on("click", function () {
-                    //var URL = "http://10.210.233.122:220/index.php";
                     var Title = "Knowledgebase";
-                    //me.PopupUrl(URL, Title);
-                    window.open(me.KBURL, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes");
+                    window.open(me.KBURL, "_blank", "height=400,width=600,toolbar=yes,scrollbars=yes,resizable=yes");
                     return false;
                 });
 
